@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWinFormsApp", "ChessWinFormsApp\ChessWinFormsApp.csproj", "{399037DF-AEC5-4604-9DEE-58D15310EE91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessClassLibrary", "ChessClassLibrary\ChessClassLibrary.csproj", "{21A9C768-76CF-4D58-A99E-5A1A1EBF6BEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{62D21B9D-D7A2-4DA5-A823-365CFD792C60}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackhorseman.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackhorseman.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackking.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackking.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackmadman.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackmadman.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackpawn.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackpawn.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackqueen.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackqueen.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackrook.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\blackrook.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitehorseman.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitehorseman.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\WhiteKing.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\WhiteKing.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitemadman.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitemadman.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitepawn.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitepawn.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitequeen.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\whitequeen.png
+		..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\WhiteRook.png = ..\..\Users\ANDREI\source\repos\ChessWebApp\ChessWebApp\wwwroot\images\WhiteRook.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{399037DF-AEC5-4604-9DEE-58D15310EE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399037DF-AEC5-4604-9DEE-58D15310EE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399037DF-AEC5-4604-9DEE-58D15310EE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399037DF-AEC5-4604-9DEE-58D15310EE91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A9C768-76CF-4D58-A99E-5A1A1EBF6BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A9C768-76CF-4D58-A99E-5A1A1EBF6BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A9C768-76CF-4D58-A99E-5A1A1EBF6BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A9C768-76CF-4D58-A99E-5A1A1EBF6BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03D6A702-5C4F-40A0-9425-23DB334E88C8}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.Form1.resources
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.Properties.Resources.resources
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.csproj.GenerateResource.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.csproj.CoreCompileInputs.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\ChessWinFormsApp.exe.config
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\ChessWinFormsApp.exe
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\ChessWinFormsApp.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\ChessClassLibrary.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\ChessClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.csprojAssemblyReference.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.csproj.CopyComplete
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.exe
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.pdb
