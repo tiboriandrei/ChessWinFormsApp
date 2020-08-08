@@ -8,5 +8,11 @@ namespace ChessClassLibrary
     {
         public Tuple<int, int> Origin;
         public Tuple<int, int> Destination;
+
+        public Move(Tuple<int, int> origin, Tuple<int, int> destination)
+        {
+            Origin = origin;
+            Destination = destination;
+        }
     }
 }

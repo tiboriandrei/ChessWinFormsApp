@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace ChessClassLibrary
 {
     public sealed class Coordinate
@@ -41,11 +42,12 @@ namespace ChessClassLibrary
             {
                 if (_Instance.Coordinates[x].ContainsKey(y))
                 {
-                    return Tuple.Create(_Instance.Coordinates[x][x], _Instance.Coordinates[x][y]);
+                    var tuple = (X: _Instance.Coordinates[x][x], Y: _Instance.Coordinates[x][y]);
+                    return tuple.ToTuple();
                 }
             }
             return null;       
         }
-                
+
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,6 +37,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelMouseLocation = new System.Windows.Forms.Label();
             this.labelSelectedPiece = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelBlackTime = new System.Windows.Forms.Label();
+            this.labelWhiteTime = new System.Windows.Forms.Label();
+            this.buttonClock = new System.Windows.Forms.Button();
+            this.buttonStopClock = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -108,11 +114,54 @@
             this.labelSelectedPiece.TabIndex = 3;
             this.labelSelectedPiece.Text = "Selected piece:";
             // 
+            // labelBlackTime
+            // 
+            this.labelBlackTime.AutoSize = true;
+            this.labelBlackTime.Location = new System.Drawing.Point(624, 110);
+            this.labelBlackTime.Name = "labelBlackTime";
+            this.labelBlackTime.Size = new System.Drawing.Size(50, 13);
+            this.labelBlackTime.TabIndex = 4;
+            this.labelBlackTime.Text = "Time left:";
+            // 
+            // labelWhiteTime
+            // 
+            this.labelWhiteTime.AutoSize = true;
+            this.labelWhiteTime.Location = new System.Drawing.Point(627, 251);
+            this.labelWhiteTime.Name = "labelWhiteTime";
+            this.labelWhiteTime.Size = new System.Drawing.Size(50, 13);
+            this.labelWhiteTime.TabIndex = 5;
+            this.labelWhiteTime.Text = "Time left:";
+            // 
+            // buttonClock
+            // 
+            this.buttonClock.Location = new System.Drawing.Point(624, 175);
+            this.buttonClock.Name = "buttonClock";
+            this.buttonClock.Size = new System.Drawing.Size(75, 23);
+            this.buttonClock.TabIndex = 6;
+            this.buttonClock.Text = "Clock";
+            this.buttonClock.UseVisualStyleBackColor = true;
+            this.buttonClock.Click += new System.EventHandler(this.buttonClock_Click);
+            // 
+            // buttonStopClock
+            // 
+            this.buttonStopClock.Location = new System.Drawing.Point(627, 297);
+            this.buttonStopClock.Name = "buttonStopClock";
+            this.buttonStopClock.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStopClock.Size = new System.Drawing.Size(75, 23);
+            this.buttonStopClock.TabIndex = 7;
+            this.buttonStopClock.Text = "Stop Clock";
+            this.buttonStopClock.UseVisualStyleBackColor = true;
+            this.buttonStopClock.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 554);
+            this.Controls.Add(this.buttonStopClock);
+            this.Controls.Add(this.buttonClock);
+            this.Controls.Add(this.labelWhiteTime);
+            this.Controls.Add(this.labelBlackTime);
             this.Controls.Add(this.labelSelectedPiece);
             this.Controls.Add(this.labelMouseLocation);
             this.Controls.Add(this.pictureBox1);
@@ -140,6 +189,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelMouseLocation;
         private System.Windows.Forms.Label labelSelectedPiece;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelBlackTime;
+        private System.Windows.Forms.Label labelWhiteTime;
+        private System.Windows.Forms.Button buttonClock;
+        private System.Windows.Forms.Button buttonStopClock;
     }
 }
 

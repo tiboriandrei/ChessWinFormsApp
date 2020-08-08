@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,18 +15,33 @@ namespace ChessWinFormsApp
 {
     public partial class Form1 : Form
     {
+        private Bitmap _Bitmap;
         private int TileWidth { get; set; } = 60;
         private int TileHeight { get; set; } = 60;
 
+        int MouseAtX = 0;
+        int MouseAtY = 0;
+        int AddSize = 0;
+
+        Thread t1;
+
+        List<Move> availableMoves;
+        Bitmap availableSquare;
+
         public Dictionary<string, Bitmap> PieceBitmaps { get; set; } = new Dictionary<string, Bitmap>();
 
+        private Game newGame;
         public Form1()
         {
             InitializeComponent();
 
             GameState.InitGameState();
 
-            var newGame = GameModeFactory.InitializeGame(GameModeOption.Normal);
+            newGame = GameModeFactory.InitializeGame(GameModeOption.Normal);
+            availableMoves = new List<Move>();
+            availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\alphasquare.png");
+
+            //-----------------------------------------------------------------------
 
             PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitepawn.png"));
             PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiterook.png"));
@@ -51,12 +68,14 @@ namespace ChessWinFormsApp
             Draw();                        
         }
 
-        public Bitmap _Bitmap;
-
         private void Draw() {
             var tileSize = new Size(TileWidth, TileHeight);
             _Bitmap = CreateBoard(tileSize);
             DrawPieces(_Bitmap);
+            if (availableMoves.Count > 0)
+            {
+                DrawAvailableMoves(_Bitmap);
+            }            
             pictureBox1.Image = _Bitmap;
         }
 
@@ -79,12 +98,27 @@ namespace ChessWinFormsApp
             return bitmap;
         }
 
-        int MouseAtX = 0;
-        int MouseAtY = 0;
-       
+        private Bitmap DrawAvailableMoves(Bitmap bitmap) {
+            
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                foreach (var move in availableMoves)
+                {
+                    Bitmap resized = new Bitmap(availableSquare, new Size(TileWidth, TileHeight));
+                    graphics.DrawImage(resized, new Point((7 - move.Destination.Item2) * TileWidth ,
+                                                          (7 - move.Destination.Item1) * TileHeight));
+
+                    //Bitmap test = PieceBitmaps["BlackPawn"];
+                    //Bitmap testPiece = new Bitmap(test, new Size(TileWidth, TileHeight));
+                    //graphics.DrawImage(testPiece, new Point((7 - move.Destination.Item2) * TileWidth,
+                    //                                      (7 - move.Destination.Item1) * TileHeight));
+                }
+            }
+            return bitmap;
+        }
+  
         private void DrawPieces(Bitmap bitmap)
-        {
-            int AddSize = 0;
+        {            
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 var Layout = GameState.GetGameState();
@@ -92,10 +126,8 @@ namespace ChessWinFormsApp
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        if (Layout.ContainsKey(i))
-                        {
-                            if (Layout[i].ContainsKey(j))
-                            {
+                        if (Layout[i][j] != null)
+                        {                            
                                 ChessPiece piece = Layout[i][j];
                                                                     
                                 Bitmap original = PieceBitmaps[piece.ToString()];
@@ -106,18 +138,28 @@ namespace ChessWinFormsApp
                                 }
                                 Bitmap resized = new Bitmap(original, new Size(TileWidth - (TileWidth / 4) + AddSize, TileHeight - (TileHeight / 4) + AddSize));                                
                                 graphics.DrawImage(resized, new Point(j * TileWidth + (TileWidth / 8) - (AddSize / 2), i * TileHeight + (TileHeight / 8) - (AddSize / 2) ));
-                                AddSize = 0;
-
-                            }                            
+                                AddSize = 0;                           
                         }  
                     }
                 }
             }
         }
-
+                
         private void Form1_Load(object sender, EventArgs e)
         {
+            t1 = new Thread(RefreshClock);
+            t1.Start();
+        }
 
+        private void RefreshClock() {
+            while (newGame._BlacksTimer.GetTimeLeft().TotalSeconds > 0 && newGame._WhitesTimer.GetTimeLeft().TotalSeconds > 0) {
+
+                MethodInvoker mi = delegate () { 
+                    labelBlackTime.Text = newGame._BlacksTimer.GetTimeLeft().ToString(@"hh\:mm\:ss\:fff");
+                    labelWhiteTime.Text = newGame._WhitesTimer.GetTimeLeft().ToString(@"hh\:mm\:ss\:fff");
+                };
+                this.Invoke(mi);
+            }
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -134,8 +176,11 @@ namespace ChessWinFormsApp
             Point coordinates = me.Location;
             labelMouseLocation.Text = "Clicked at x: " + coordinates.X / 60 + " y: " + (7 - coordinates.Y / 60);
 
-            var coords = Coordinate.GetInstance.GetCoord(coordinates.X / 60, (7 - coordinates.Y / 60));
-            Console.WriteLine();
+            var selectedPieceCoords = Coordinate.GetInstance.GetCoord((7 - coordinates.Y / 60), (7 - coordinates.X / 60));
+
+            availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
+            var tileSize = new Size(TileWidth, TileHeight);
+            Draw();
         }
 
         // labelMouseLocation.Text = "Mouse at x: " + (pos.X / 60) + " y: " + (7 - pos.Y / 60);      //for checkmove logic
@@ -153,8 +198,18 @@ namespace ChessWinFormsApp
 
                 //Draw();
             }
+        }
 
+        private void buttonClock_Click(object sender, EventArgs e)
+        {
+            newGame._BlacksTimer.ResumeClock();
+            newGame._WhitesTimer.ResumeClock();
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            newGame._BlacksTimer.StopClock();
+            newGame._WhitesTimer.StopClock();
         }
     }
 }

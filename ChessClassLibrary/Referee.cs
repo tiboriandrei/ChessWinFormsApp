@@ -4,14 +4,17 @@ using System.Text;
 
 namespace ChessClassLibrary
 {
-    public class Referee
+    public static class Referee
     {
-        public List<Move> GetAvailableMoves() {
-            List<Move> AvailableMoves = new List<Move>();
-            return AvailableMoves;
+        public static List<Move> GetAvailableMoves(Tuple<int, int> selectedPieceCoords) {
+            //List<Move> AvailableMoves = new List<Move>();
+            var Layout = GameState.GetGameState();
+            //AvailableMoves = Layout[coord.Item1][coord.Item2].GetAvailableMoves();
+
+            return GameState.GetGameState()[selectedPieceCoords.Item1][selectedPieceCoords.Item2].GetAvailableMoves(selectedPieceCoords);
         }
 
-        public bool ValidateMove(Move move, Dictionary<int, Dictionary<int, ChessPiece>> gameState) {
+        public static bool ValidateMove() {
             return false;
         }
     }

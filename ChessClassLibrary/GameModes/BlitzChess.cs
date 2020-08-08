@@ -8,6 +8,7 @@ namespace ChessClassLibrary.GameModes
     {
         public BlitzChess(int duration) : base(duration)
         {
+
         }
     }
 }

@@ -51,6 +51,17 @@ namespace ChessClassLibrary
                 BlackPawns.Add(i, PieceFactory.GeneratePiece(PieceType.Pawn, PieceColor.Black));
             }
             Layout.Add(1, BlackPawns);
+
+            Dictionary<int, ChessPiece> EmptySpots = new Dictionary<int, ChessPiece>();
+            for (int i = 0; i < 8; i++)
+            {
+                EmptySpots.Add(i, null);
+            }
+            for (int i = 2; i < 6; i++)
+            {
+                Layout.Add(i, EmptySpots);
+            }
+            
         }
 
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetGameState() {

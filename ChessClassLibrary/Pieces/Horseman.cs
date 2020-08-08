@@ -10,5 +10,10 @@ namespace ChessClassLibrary.Pieces
         {
 
         }
+
+        public override List<Move> GetAvailableMoves(Tuple<int, int> coords)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

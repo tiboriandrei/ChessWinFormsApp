@@ -8,6 +8,7 @@ namespace ChessClassLibrary.Clocks
     {        
         public BlacksTimer(int _duration) : base(_duration)
         {
+
         }
     }
 }

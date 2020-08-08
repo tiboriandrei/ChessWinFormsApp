@@ -14,7 +14,7 @@ namespace ChessClassLibrary
             _WhitesTimer = new WhitesTimer(duration);
         }
 
-        public Table Table { get; set; }
+        //public Table Table { get; set; }
         
         public string PlayerTurn { get; set; } = "White";
         public string MoveResult { get; set; }

@@ -10,25 +10,40 @@ namespace ChessClassLibrary.Clocks
 
         private DateTime StartTime;
 
+        private bool Stopped = true;
+
         public Clock(int _duration)
         {
             MaxTime = _duration;            
         }
 
-        public void StartClock() {
-            StartTime = DateTime.Now;
+        public void ResumeClock() {
+            if (Stopped)
+            {
+                StartTime = DateTime.Now;
+                Stopped = false;
+            }            
         }
 
         public void StopClock()
         {
-            MaxTime = GetTimeLeft();
-            StartTime = DateTime.Now;
+            MaxTime = GetTimeLeft().TotalSeconds;
+            Stopped = true;
         }
 
-        public double GetTimeLeft() {
-            TimeSpan timePassed = DateTime.Now - StartTime; 
-            return MaxTime - timePassed.TotalSeconds;
+        public TimeSpan GetTimeLeft() {
+            if (Stopped)
+            {
+                return TimeSpan.FromSeconds(MaxTime);
+            }
+            else {
+                TimeSpan timePassed = DateTime.Now - StartTime;
+                return TimeSpan.FromSeconds(MaxTime - timePassed.TotalSeconds);
+            }
+            
         }
+
+        //times up event invoke to refree who invokes further...etc
 
         //in blitzmode, when player moves and the time left is low, increment +5 by event or something
 

@@ -8,6 +8,7 @@ namespace ChessClassLibrary.Clocks
     {
         public WhitesTimer(int _duration) : base(_duration)
         {
+
         }
     }
 }
