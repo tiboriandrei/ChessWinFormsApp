@@ -1,9 +1,9 @@
-E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.csprojAssemblyReference.cache
-E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.AssemblyInfoInputs.cache
-E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.AssemblyInfo.cs
-E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.csproj.CoreCompileInputs.cache
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\bin\Debug\netstandard2.0\ChessClassLibrary.deps.json
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\bin\Debug\netstandard2.0\ChessClassLibrary.dll
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\bin\Debug\netstandard2.0\ChessClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.AssemblyInfoInputs.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.AssemblyInfo.cs
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.csproj.CoreCompileInputs.cache
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.dll
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessClassLibrary\obj\Debug\netstandard2.0\ChessClassLibrary.csprojAssemblyReference.cache

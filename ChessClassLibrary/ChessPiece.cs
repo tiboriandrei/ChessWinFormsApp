@@ -21,6 +21,6 @@ namespace ChessClassLibrary
         public override string ToString()
         {
             return this.PieceColor.ToString() + this.GetType().Name;
-        }
+        }        
     }
 }

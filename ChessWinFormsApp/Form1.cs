@@ -106,7 +106,7 @@ namespace ChessWinFormsApp
                 {
                     Bitmap resized = new Bitmap(availableSquare, new Size(TileWidth, TileHeight));
                     graphics.DrawImage(resized, new Point((7 - move.Destination.Item2) * TileWidth ,
-                                                          (7 - move.Destination.Item1) * TileHeight));
+                                                          (move.Destination.Item1) * TileHeight));
 
                     //Bitmap test = PieceBitmaps["BlackPawn"];
                     //Bitmap testPiece = new Bitmap(test, new Size(TileWidth, TileHeight));
@@ -126,9 +126,9 @@ namespace ChessWinFormsApp
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        if (Layout[i][j] != null)
+                        if (Layout[i][7 - j] != null)
                         {                            
-                                ChessPiece piece = Layout[i][j];
+                                ChessPiece piece = Layout[i][7 - j];
                                                                     
                                 Bitmap original = PieceBitmaps[piece.ToString()];
 
@@ -170,16 +170,31 @@ namespace ChessWinFormsApp
             Draw();
         }
 
+        int timer = 0;
+        Tuple<int, int> selectedPieceCoords = Tuple.Create(-1, -1);
+        Tuple<int, int> selectedTargetCoords;
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
             labelMouseLocation.Text = "Clicked at x: " + coordinates.X / 60 + " y: " + (7 - coordinates.Y / 60);
 
-            var selectedPieceCoords = Coordinate.GetInstance.GetCoord((7 - coordinates.Y / 60), (7 - coordinates.X / 60));
+            selectedTargetCoords = Coordinate.GetInstance.GetCoord((coordinates.Y / 60), (7 - coordinates.X / 60));
 
-            availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
-            var tileSize = new Size(TileWidth, TileHeight);
+            Move attemptedMove = new Move(selectedPieceCoords, selectedTargetCoords);
+
+            if (availableMoves.Any(coord => coord.Origin.Item2 == attemptedMove.Origin.Item2 && coord.Origin.Item1 == attemptedMove.Origin.Item1 && 
+                                            coord.Destination.Item2 == attemptedMove.Destination.Item2 && coord.Destination.Item1 == attemptedMove.Destination.Item1))
+            {
+                GameState.UpdateLayout(attemptedMove);
+                selectedPieceCoords = Tuple.Create(-1, -1);
+            }
+            else {
+                selectedPieceCoords = Coordinate.GetInstance.GetCoord((coordinates.Y / 60), (7 - coordinates.X / 60));
+                availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
+            }
+
             Draw();
         }
 
