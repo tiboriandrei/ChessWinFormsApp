@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace ChessClassLibrary
 {
     public static class GameState
     {
-        private static Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
+        private static readonly Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
         public static void InitGameState() {
                         
@@ -62,17 +63,23 @@ namespace ChessClassLibrary
             Layout.Add(7, WhitePieces);
         }
 
-        public static Dictionary<int, Dictionary<int, ChessPiece>> GetGameState() {
+        public static Dictionary<int, Dictionary<int, ChessPiece>> GetGameState() 
+        {
             Dictionary<int, Dictionary<int, ChessPiece>> clone = Layout;
             return clone;
         }
 
-        public static void UpdateLayout(Move legalMove) {
-
-            Layout[legalMove.Destination.Item1].Remove(legalMove.Destination.Item2);
-            Layout[legalMove.Destination.Item1].Add(legalMove.Destination.Item2, Layout[legalMove.Origin.Item1][legalMove.Origin.Item2]);
-                       
+        public static void UpdateLayout(Move legalMove) 
+        {
+            Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] = Layout[legalMove.Origin.Item1][legalMove.Origin.Item2];
             Layout[legalMove.Origin.Item1][legalMove.Origin.Item2] = null;
+
+            PlayerEventArgs args = new PlayerEventArgs
+            {
+                pieceColor = Layout[legalMove.Destination.Item1][legalMove.Destination.Item2].PieceColor
+            };
+
+            EventsMediator.OnPlayerMoved(null, args);
         }
 
         

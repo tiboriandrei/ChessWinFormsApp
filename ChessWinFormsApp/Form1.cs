@@ -30,18 +30,14 @@ namespace ChessWinFormsApp
 
         public Dictionary<string, Bitmap> PieceBitmaps { get; set; } = new Dictionary<string, Bitmap>();
 
-        private Game newGame;
+        private Game newGame = null;
         public Form1()
         {
             InitializeComponent();
 
-            GameState.InitGameState();
+            //----------------------------------------------------------------------- 
 
-            newGame = GameModeFactory.InitializeGame(GameModeOption.Normal);
-            availableMoves = new List<Move>();
             availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\alphasquare.png");
-
-            //-----------------------------------------------------------------------
 
             PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitepawn.png"));
             PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiterook.png"));
@@ -65,6 +61,15 @@ namespace ChessWinFormsApp
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GameState.InitGameState();
+            Referee.InitReferee();
+
+            newGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);
+            availableMoves = new List<Move>();
+
+            t1 = new Thread(RefreshClock);
+            t1.Start();
+
             Draw();                        
         }
 
@@ -147,16 +152,15 @@ namespace ChessWinFormsApp
                 
         private void Form1_Load(object sender, EventArgs e)
         {
-            t1 = new Thread(RefreshClock);
-            t1.Start();
+            
         }
 
         private void RefreshClock() {
-            while (newGame._BlacksTimer.GetTimeLeft().TotalSeconds > 0 && newGame._WhitesTimer.GetTimeLeft().TotalSeconds > 0) {
+            while (newGame._ChessClock._BlacksTimer.GetTimeLeft().TotalSeconds > 0 && newGame._ChessClock._WhitesTimer.GetTimeLeft().TotalSeconds > 0) {
 
                 MethodInvoker mi = delegate () { 
-                    labelBlackTime.Text = newGame._BlacksTimer.GetTimeLeft().ToString(@"hh\:mm\:ss\:fff");
-                    labelWhiteTime.Text = newGame._WhitesTimer.GetTimeLeft().ToString(@"hh\:mm\:ss\:fff");
+                    labelBlackTime.Text = newGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"mm\:ss");      // hh\:mm\:ss\:fff
+                    labelWhiteTime.Text = newGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"mm\:ss");
                 };
                 this.Invoke(mi);
             }
@@ -167,12 +171,15 @@ namespace ChessWinFormsApp
             double ratio = Math.Min(this.Width / 60, this.Height / 60);
             TileWidth = (int)(4 * ratio);
             TileHeight = (int)(4 * ratio);
-            Draw();
+            if (newGame != null)
+            {
+                Draw();
+            }            
         }
-
-        int timer = 0;
+                
         Tuple<int, int> selectedPieceCoords = Tuple.Create(-1, -1);
         Tuple<int, int> selectedTargetCoords;
+        int x, y;
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -180,18 +187,20 @@ namespace ChessWinFormsApp
             Point coordinates = me.Location;
             labelMouseLocation.Text = "Clicked at x: " + coordinates.X / 60 + " y: " + (7 - coordinates.Y / 60);
 
-            selectedTargetCoords = Coordinate.GetInstance.GetCoord((coordinates.Y / 60), (7 - coordinates.X / 60));
-
+            x = (coordinates.Y / 60);
+            y = (7 - coordinates.X / 60);
+            selectedTargetCoords = Coordinate.GetInstance.GetCoord(x, y);
+            
             Move attemptedMove = new Move(selectedPieceCoords, selectedTargetCoords);
 
-            if (availableMoves.Any(coord => coord.Origin.Item2 == attemptedMove.Origin.Item2 && coord.Origin.Item1 == attemptedMove.Origin.Item1 && 
-                                            coord.Destination.Item2 == attemptedMove.Destination.Item2 && coord.Destination.Item1 == attemptedMove.Destination.Item1))
+            if (HelperMaths.ContainsObjectMove(availableMoves, attemptedMove))
             {
                 GameState.UpdateLayout(attemptedMove);
                 selectedPieceCoords = Tuple.Create(-1, -1);
+                availableMoves.Clear();
             }
             else {
-                selectedPieceCoords = Coordinate.GetInstance.GetCoord((coordinates.Y / 60), (7 - coordinates.X / 60));
+                selectedPieceCoords = Coordinate.GetInstance.GetCoord(x, y);
                 availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
             }
 
@@ -204,7 +213,7 @@ namespace ChessWinFormsApp
         {
             Point mPos = pictureBox1.PointToClient(Cursor.Position);
 
-            //labelMouseLocation.Text = "Mouse at x: " + (7 - pos.Y / 60) + " y: " + (pos.X / 60);  
+            //labelMouseLocation.Text = "Mouse at x: " + (7 - mPos.Y / 60) + " y: " + (mPos.X / 60);  
 
             if (mPos.X / TileHeight >= 0 && mPos.X / TileWidth <= 7 && mPos.Y / TileHeight >= 0 && mPos.Y / TileWidth <= 7)
             {
@@ -217,14 +226,19 @@ namespace ChessWinFormsApp
 
         private void buttonClock_Click(object sender, EventArgs e)
         {
-            newGame._BlacksTimer.ResumeClock();
-            newGame._WhitesTimer.ResumeClock();
+            newGame._ChessClock._BlacksTimer.ResumeClock();
+            newGame._ChessClock._WhitesTimer.ResumeClock();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            t1.Abort();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            newGame._BlacksTimer.StopClock();
-            newGame._WhitesTimer.StopClock();
-        }
+            newGame._ChessClock._BlacksTimer.StopClock();
+            newGame._ChessClock._WhitesTimer.StopClock();
+        }        
     }
 }

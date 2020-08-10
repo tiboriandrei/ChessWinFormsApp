@@ -39,8 +39,7 @@ namespace ChessClassLibrary.Clocks
             else {
                 TimeSpan timePassed = DateTime.Now - StartTime;
                 return TimeSpan.FromSeconds(MaxTime - timePassed.TotalSeconds);
-            }
-            
+            }            
         }
 
         //times up event invoke to refree who invokes further...etc

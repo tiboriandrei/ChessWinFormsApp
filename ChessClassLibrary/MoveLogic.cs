@@ -6,10 +6,10 @@ namespace ChessClassLibrary
 {
     public static class MoveLogic
     {
-        public static bool IsInRange(this int value, int inclusiveMinimum, int inclusiveMaximum)
-        {
-            if (value >= inclusiveMinimum && value <= inclusiveMaximum) { return true; } else { return false; }
-        }
+        //public static bool IsInRange(this int value, int inclusiveMinimum, int inclusiveMaximum)
+        //{
+        //    if (value >= inclusiveMinimum && value <= inclusiveMaximum) { return true; } else { return false; }
+        //}
 
         //public List<Move> GetDiagonalMoves(Tuple<int, int> coords) {
         //    //List<Move> availableMoves = new List<Move>();

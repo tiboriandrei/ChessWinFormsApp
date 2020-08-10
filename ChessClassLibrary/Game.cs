@@ -5,34 +5,11 @@ namespace ChessClassLibrary
 {
     public class Game
     {
-        public readonly BlacksTimer _BlacksTimer;
-        public readonly WhitesTimer _WhitesTimer;
+        public readonly ChessClock _ChessClock;
 
         public Game(int duration)
-        {
-            _BlacksTimer = new BlacksTimer(duration);
-            _WhitesTimer = new WhitesTimer(duration);
-        }
-        
-        public string PlayerTurn { get; set; } = "White";
-        public string MoveResult { get; set; }
-
-        public void GetResult(object sender, string e)
-        {
-            MoveResult = e;
-            //Mediator.GetInstance().Result -= GetResult;
-
-            if (MoveResult == "goodMove")
-            {
-                if (PlayerTurn == "White")
-                {
-                    PlayerTurn = "Black";
-                }
-                else
-                {
-                    PlayerTurn = "White";
-                }
-            }
-        }
+        {            
+            _ChessClock = new ChessClock(duration);
+        }        
     }
 }

@@ -80,7 +80,7 @@ namespace ChessClassLibrary.Pieces
                     {
                         if (Layout[coords.Item1 + 1][coords.Item2 + 1].PieceColor != this.PieceColor)
                         {
-                            availableMoves.Add(new Move(coords, Tuple.Create(coords.Item1 - 1, coords.Item2 - 1)));
+                            availableMoves.Add(new Move(coords, Tuple.Create(coords.Item1 + 1, coords.Item2 + 1)));
                         }
                     }
                 }

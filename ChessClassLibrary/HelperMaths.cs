@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ChessClassLibrary
@@ -25,6 +26,19 @@ namespace ChessClassLibrary
                 }
             }
             return table;
+        }
+
+        public static bool ContainsObjectMove(List<Move> moves, Move attemptedMove)
+        {
+            if (moves.Any(coord => coord.Origin.Item2 == attemptedMove.Origin.Item2 && coord.Origin.Item1 == attemptedMove.Origin.Item1 &&
+                                   coord.Destination.Item2 == attemptedMove.Destination.Item2 && coord.Destination.Item1 == attemptedMove.Destination.Item1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

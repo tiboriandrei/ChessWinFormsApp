@@ -117,24 +117,26 @@
             // labelBlackTime
             // 
             this.labelBlackTime.AutoSize = true;
-            this.labelBlackTime.Location = new System.Drawing.Point(624, 110);
+            this.labelBlackTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBlackTime.Location = new System.Drawing.Point(618, 92);
             this.labelBlackTime.Name = "labelBlackTime";
-            this.labelBlackTime.Size = new System.Drawing.Size(50, 13);
+            this.labelBlackTime.Size = new System.Drawing.Size(126, 31);
             this.labelBlackTime.TabIndex = 4;
             this.labelBlackTime.Text = "Time left:";
             // 
             // labelWhiteTime
             // 
             this.labelWhiteTime.AutoSize = true;
-            this.labelWhiteTime.Location = new System.Drawing.Point(627, 251);
+            this.labelWhiteTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelWhiteTime.Location = new System.Drawing.Point(618, 436);
             this.labelWhiteTime.Name = "labelWhiteTime";
-            this.labelWhiteTime.Size = new System.Drawing.Size(50, 13);
+            this.labelWhiteTime.Size = new System.Drawing.Size(126, 31);
             this.labelWhiteTime.TabIndex = 5;
             this.labelWhiteTime.Text = "Time left:";
             // 
             // buttonClock
             // 
-            this.buttonClock.Location = new System.Drawing.Point(624, 175);
+            this.buttonClock.Location = new System.Drawing.Point(749, 490);
             this.buttonClock.Name = "buttonClock";
             this.buttonClock.Size = new System.Drawing.Size(75, 23);
             this.buttonClock.TabIndex = 6;
@@ -144,7 +146,7 @@
             // 
             // buttonStopClock
             // 
-            this.buttonStopClock.Location = new System.Drawing.Point(627, 297);
+            this.buttonStopClock.Location = new System.Drawing.Point(749, 519);
             this.buttonStopClock.Name = "buttonStopClock";
             this.buttonStopClock.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.buttonStopClock.Size = new System.Drawing.Size(75, 23);
@@ -169,6 +171,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
