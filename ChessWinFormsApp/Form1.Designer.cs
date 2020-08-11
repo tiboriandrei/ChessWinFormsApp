@@ -42,6 +42,8 @@
             this.labelWhiteTime = new System.Windows.Forms.Label();
             this.buttonClock = new System.Windows.Forms.Button();
             this.buttonStopClock = new System.Windows.Forms.Button();
+            this.labelWinner = new System.Windows.Forms.Label();
+            this.buttonUndo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -155,11 +157,32 @@
             this.buttonStopClock.UseVisualStyleBackColor = true;
             this.buttonStopClock.Click += new System.EventHandler(this.button1_Click);
             // 
+            // labelWinner
+            // 
+            this.labelWinner.AutoSize = true;
+            this.labelWinner.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelWinner.Location = new System.Drawing.Point(602, 252);
+            this.labelWinner.Name = "labelWinner";
+            this.labelWinner.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelWinner.Size = new System.Drawing.Size(0, 31);
+            this.labelWinner.TabIndex = 8;
+            // 
+            // buttonUndo
+            // 
+            this.buttonUndo.Location = new System.Drawing.Point(84, 528);
+            this.buttonUndo.Name = "buttonUndo";
+            this.buttonUndo.Size = new System.Drawing.Size(43, 23);
+            this.buttonUndo.TabIndex = 9;
+            this.buttonUndo.Text = "Undo";
+            this.buttonUndo.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 554);
+            this.Controls.Add(this.buttonUndo);
+            this.Controls.Add(this.labelWinner);
             this.Controls.Add(this.buttonStopClock);
             this.Controls.Add(this.buttonClock);
             this.Controls.Add(this.labelWhiteTime);
@@ -197,6 +220,8 @@
         private System.Windows.Forms.Label labelWhiteTime;
         private System.Windows.Forms.Button buttonClock;
         private System.Windows.Forms.Button buttonStopClock;
+        private System.Windows.Forms.Label labelWinner;
+        private System.Windows.Forms.Button buttonUndo;
     }
 }
 

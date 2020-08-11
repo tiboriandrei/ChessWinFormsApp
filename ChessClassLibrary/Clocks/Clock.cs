@@ -32,6 +32,11 @@ namespace ChessClassLibrary.Clocks
         }
 
         public TimeSpan GetTimeLeft() {
+            if (MaxTime <= 0)
+            {
+                EventsMediator.OnTimesUp(null, EventArgs.Empty);
+            }
+
             if (Stopped)
             {
                 return TimeSpan.FromSeconds(MaxTime);

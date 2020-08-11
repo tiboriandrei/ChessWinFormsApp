@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ChessClassLibrary.Pieces
 {
+    [Serializable]
     public class Horseman : ChessPiece
     {
         public Horseman(PieceColor _colour) : base(_colour)

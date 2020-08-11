@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ChessClassLibrary.Pieces;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace ChessClassLibrary
@@ -39,6 +43,249 @@ namespace ChessClassLibrary
             {
                 return false;
             }
+        }
+
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        //-----------------------------------------------------------------
+
+        // King check functions
+
+        //-----------------------------------------------------------------
+
+        public static bool EnemyPawnCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+        {
+            if (enemy == PieceColor.Black)
+            {
+                if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
+                {
+                    if (scenario[kingX - 1][kingY - 1] != null)
+                    {
+                        if (scenario[kingX - 1][kingY - 1].ToString() == enemy.ToString() + "Pawn")
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
+                {
+                        if (scenario[kingX - 1][kingY + 1] != null)
+                    {
+                        if (scenario[kingX - 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (enemy == PieceColor.White)
+            {
+                if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
+                {
+                    if (scenario[kingX + 1][kingY - 1] != null)
+                    {
+                        if (scenario[kingX + 1][kingY - 1].ToString() == enemy.ToString() + "Pawn")
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
+                {
+                        if (scenario[kingX + 1][kingY + 1] != null)
+                    {
+                        if (scenario[kingX + 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+                
+        public static bool HorizontalThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX + i, 0, 7))
+                {
+                    if (scenario[kingX + i][kingY] != null)
+                    {
+                        if (scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Rook.ToString() || 
+                            scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Queen.ToString() )
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }            
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX - i, 0, 7))
+                {
+                    if (scenario[kingX - i][kingY] != null)
+                    {
+                        if (scenario[kingX - i][kingY].ToString() == enemy.ToString() + PieceType.Rook.ToString() ||
+                            scenario[kingX - i][kingY].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingY + i, 0, 7))
+                {
+                    if (scenario[kingX][kingY + i] != null)
+                    {
+                        if (scenario[kingX][kingY + i].ToString() == enemy.ToString() + PieceType.Rook.ToString() ||
+                            scenario[kingX][kingY + i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingY - i, 0, 7))
+                {
+                    if (scenario[kingX][kingY - i] != null)
+                    {
+                        if (scenario[kingX][kingY - i].ToString() == enemy.ToString() + PieceType.Rook.ToString() ||
+                            scenario[kingX][kingY - i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool DiagonalThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+        {
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX + i, 0, 7) && HelperMaths.IsInRange(kingY + i, 0, 7))
+                {
+                    if (scenario[kingX + i][kingY + i] != null)
+                    {
+                        if (scenario[kingX + i][kingY + i].ToString() == enemy.ToString() + PieceType.Madman.ToString() ||
+                            scenario[kingX + i][kingY + i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX - i, 0, 7) && HelperMaths.IsInRange(kingY + i, 0, 7))
+                {
+                    if (scenario[kingX - i][kingY + i] != null)
+                    {
+                        if (scenario[kingX - i][kingY + i].ToString() == enemy.ToString() + PieceType.Madman.ToString() ||
+                            scenario[kingX - i][kingY + i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX + i, 0, 7) && HelperMaths.IsInRange(kingY - i, 0, 7))
+                {
+                    if (scenario[kingX + i][kingY - i] != null)
+                    {
+                        if (scenario[kingX + i][kingY - i].ToString() == enemy.ToString() + PieceType.Madman.ToString() ||
+                            scenario[kingX + i][kingY - i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++)
+            {
+                if (HelperMaths.IsInRange(kingX - i, 0, 7) && HelperMaths.IsInRange(kingY - i, 0, 7))
+                {
+                    if (scenario[kingX - i][kingY - i] != null)
+                    {
+                        if (scenario[kingX - i][kingY - i].ToString() == enemy.ToString() + PieceType.Madman.ToString() ||
+                            scenario[kingX - i][kingY - i].ToString() == enemy.ToString() + PieceType.Queen.ToString())
+                        {
+                            return true;
+                        }
+                        else { break; }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return false;
+        
         }
     }
 }

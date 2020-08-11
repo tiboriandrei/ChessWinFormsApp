@@ -6,7 +6,8 @@ using System.Text;
 
 namespace ChessClassLibrary
 {
-    public static class GameState
+    [Serializable]
+    public static class GameState 
     {
         private static readonly Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
@@ -65,8 +66,18 @@ namespace ChessClassLibrary
 
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetGameState() 
         {
-            Dictionary<int, Dictionary<int, ChessPiece>> clone = Layout;
+            Dictionary<int, Dictionary<int, ChessPiece>> clone = HelperMaths.DeepClone(Layout);
             return clone;
+        }
+
+        public static Dictionary<int, Dictionary<int, ChessPiece>> GetScenario(Move testMove)
+        {
+            Dictionary<int, Dictionary<int, ChessPiece>> scenario = HelperMaths.DeepClone(Layout);
+
+            scenario[testMove.Destination.Item1][testMove.Destination.Item2] = scenario[testMove.Origin.Item1][testMove.Origin.Item2];
+            scenario[testMove.Origin.Item1][testMove.Origin.Item2] = null;
+
+            return scenario;
         }
 
         public static void UpdateLayout(Move legalMove) 
@@ -81,8 +92,6 @@ namespace ChessClassLibrary
 
             EventsMediator.OnPlayerMoved(null, args);
         }
-
-        
-
+                
     }
 }

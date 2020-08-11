@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ChessClassLibrary
 {
+    [Serializable]
     public abstract class ChessPiece
     {
         public PieceColor PieceColor { get; private set; }

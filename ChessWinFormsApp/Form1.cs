@@ -59,10 +59,16 @@ namespace ChessWinFormsApp
 
         }
 
+        public void GameOver(object sender, PlayerEventArgs e) {
+            labelWinner.Text = e.pieceColor.ToString() + " lost";
+        }
+
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GameState.InitGameState();
             Referee.InitReferee();
+
+            EventsMediator.Winner += GameOver;
 
             newGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);
             availableMoves = new List<Move>();
@@ -75,8 +81,10 @@ namespace ChessWinFormsApp
 
         private void Draw() {
             var tileSize = new Size(TileWidth, TileHeight);
+            
             _Bitmap = CreateBoard(tileSize);
             DrawPieces(_Bitmap);
+
             if (availableMoves.Count > 0)
             {
                 DrawAvailableMoves(_Bitmap);
@@ -156,9 +164,14 @@ namespace ChessWinFormsApp
         }
 
         private void RefreshClock() {
-            while (newGame._ChessClock._BlacksTimer.GetTimeLeft().TotalSeconds > 0 && newGame._ChessClock._WhitesTimer.GetTimeLeft().TotalSeconds > 0) {
+            while (true) {
+                MethodInvoker mi = delegate () {
+                    if (newGame._ChessClock._BlacksTimer.GetTimeLeft().TotalSeconds <= 0 || newGame._ChessClock._WhitesTimer.GetTimeLeft().TotalSeconds <= 0)
+                    {
+                        newGame._ChessClock._BlacksTimer.StopClock();
+                        newGame._ChessClock._WhitesTimer.StopClock();
+                    }
 
-                MethodInvoker mi = delegate () { 
                     labelBlackTime.Text = newGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"mm\:ss");      // hh\:mm\:ss\:fff
                     labelWhiteTime.Text = newGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"mm\:ss");
                 };
@@ -232,7 +245,10 @@ namespace ChessWinFormsApp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            t1.Abort();
+            if (t1 != null)
+            {
+                t1.Abort();
+            }            
         }
 
         private void button1_Click(object sender, EventArgs e)
