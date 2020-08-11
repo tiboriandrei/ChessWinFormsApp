@@ -14,9 +14,6 @@ namespace ChessClassLibrary
             PieceColor = _color;
         }
 
-        //public abstract bool TryMove(Spot[,] Spots, Spot origin, Spot dest, string player);
-        //public abstract Spot[,] MarkAttackedSpots(Spot[,] Spots, Spot origin, string player);
-
         public abstract List<Move> GetAvailableMoves(Tuple<int, int> coords); 
 
         public override string ToString()

@@ -16,7 +16,7 @@ namespace ChessClassLibrary
             if (value >= inclusiveMinimum && value <= inclusiveMaximum) { return true; } else { return false; }
         }
 
-        public static Dictionary<int, Dictionary<int, ChessPiece>> FlipTable(Dictionary<int, Dictionary<int, ChessPiece>> table) 
+        public static Dictionary<int, Dictionary<int, ChessPiece>> FlipTable(Dictionary<int, Dictionary<int, ChessPiece>> table)
         {
             //Dictionary<int, Dictionary<int, ChessPiece>> flippedTable = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
@@ -26,7 +26,7 @@ namespace ChessClassLibrary
                 {
                     var aux = table[i][j];
                     table[i][j] = table[7 - i][7 - j];
-                    table[7 - i][7 - j] = aux;                    
+                    table[7 - i][7 - j] = aux;
                 }
             }
             return table;
@@ -80,7 +80,7 @@ namespace ChessClassLibrary
 
                 if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
                 {
-                        if (scenario[kingX - 1][kingY + 1] != null)
+                    if (scenario[kingX - 1][kingY + 1] != null)
                     {
                         if (scenario[kingX - 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
                         {
@@ -105,7 +105,7 @@ namespace ChessClassLibrary
 
                 if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
                 {
-                        if (scenario[kingX + 1][kingY + 1] != null)
+                    if (scenario[kingX + 1][kingY + 1] != null)
                     {
                         if (scenario[kingX + 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
                         {
@@ -116,8 +116,8 @@ namespace ChessClassLibrary
             }
             return false;
         }
-                
-        public static bool HorizontalThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+
+        public static bool VerticalThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
         {
             for (int i = 1; i <= 8; i++)
             {
@@ -125,8 +125,8 @@ namespace ChessClassLibrary
                 {
                     if (scenario[kingX + i][kingY] != null)
                     {
-                        if (scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Rook.ToString() || 
-                            scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Queen.ToString() )
+                        if (scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Rook.ToString() ||
+                            scenario[kingX + i][kingY].ToString() == enemy.ToString() + PieceType.Queen.ToString())
                         {
                             return true;
                         }
@@ -136,7 +136,7 @@ namespace ChessClassLibrary
                 else
                 {
                     break;
-                }            
+                }
             }
 
             for (int i = 1; i <= 8; i++)
@@ -159,6 +159,11 @@ namespace ChessClassLibrary
                 }
             }
 
+            return false;
+        }
+
+        public static bool HorizontalThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+        {
             for (int i = 1; i <= 8; i++)
             {
                 if (HelperMaths.IsInRange(kingY + i, 0, 7))

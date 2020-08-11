@@ -61,6 +61,8 @@ namespace ChessWinFormsApp
 
         public void GameOver(object sender, PlayerEventArgs e) {
             labelWinner.Text = e.pieceColor.ToString() + " lost";
+            newGame._ChessClock._BlacksTimer.StopClock();
+            newGame._ChessClock._WhitesTimer.StopClock();
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)

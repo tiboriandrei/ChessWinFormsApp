@@ -23,19 +23,9 @@ namespace ChessClassLibrary
             EventsMediator.PlayerMoved += ChangePlayerTurn;
             EventsMediator.TimesUp += EndGame; 
         }
-
-        //private static void newThreadFunc(int key, Move testMove) 
-        //{
-        //    var scenario = GameState.GetScenario(testMove);
-        //    if (TestKingChecks(scenario))
-        //    {
-        //        myThrSafeDict.TryRemove(key, out _);                
-        //    }
-        //}
-       
+               
         public static List<Move> GetAvailableMoves(Tuple<int, int> selectedPieceCoords) {
-
-            
+                        
             AvailableMoves.Clear();
             var Layout = GameState.GetGameState();
 
@@ -48,49 +38,59 @@ namespace ChessClassLibrary
                 return new List<Move>();
             }
 
-            AvailableMoves = Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].GetAvailableMoves(selectedPieceCoords);
-                        
-            //for (int i = 0; i < AvailableMoves.Count; i++)
-            //{
-            //    myThrSafeDict.GetOrAdd(i, AvailableMoves[i]);
-            //}
-
-            //for (int i = 0; i < myThrSafeDict.Count; i++)
-            //{
-            //    Move testMove = myThrSafeDict[i];
-
-            //    Thread thr = new Thread(() => newThreadFunc(i, testMove));
-            //    thr.Start();
-            //}
-
-            //List<Move> list = new List<Move>();
-            //Thread.Sleep(1000);
-            //foreach (var item in myThrSafeDict)
-            //{
-            //    list.Add(item.Value);
-            //}            
-
-            for (int i = 0; i < AvailableMoves.Count; i++)          
+            if (CheckForAnyMovesLeft(Layout) == 0)
             {
-                Move testMove = AvailableMoves[i];
-                var scenario = GameState.GetScenario(testMove);
+                PlayerEventArgs args = new PlayerEventArgs
+                {
+                    pieceColor = PlayerTurn
+                };
+                EventsMediator.OnWinner(null, args);
+                return AvailableMoves;
+            }
+
+            AvailableMoves = Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].GetAvailableMoves(selectedPieceCoords);
+            AvailableMoves = DeleteIllegalMoves(AvailableMoves);
+
+            return AvailableMoves;
+        }
+
+        private static int CheckForAnyMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> Layout) {
+            int movesToAvoidMate = 0;
+            var test = GameState.GetGameState();
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (movesToAvoidMate > 0)
+                    {
+                        break;
+                    }
+                    if (test[i][j] != null)
+                    {
+                        if (test[i][j].PieceColor == PlayerTurn)
+                        {
+                            List<Move> pieceAvMoves = Layout[i][j].GetAvailableMoves(Coordinate.GetInstance.GetCoord(i, j)); ;
+                            DeleteIllegalMoves(pieceAvMoves);
+                            movesToAvoidMate += pieceAvMoves.Count;
+                        }
+                    }
+                }
+            }
+            return movesToAvoidMate;
+        }
+
+        private static List<Move> DeleteIllegalMoves(List<Move> availableMoves) {
+            for (int i = 0; i < availableMoves.Count; i++)
+            {
+                var scenario = GameState.GetScenario(availableMoves[i]);
 
                 if (TestKingChecks(scenario))
                 {
-                    AvailableMoves.RemoveAt(i);
+                    availableMoves.RemoveAt(i);
                     i--;
                 }
             }
-
-            foreach (Move move in AvailableMoves)
-            {      
-                //Thread thr = new Thread( () => TestKingChecks(scenario) );
-                //if king is checked in move scenario, delete move from list. (use threads maybe)
-            }
-
-            //if list.count == 0 , invoke check mate event
-
-            return AvailableMoves;
+            return availableMoves;
         }
 
         private static bool TestKingChecks(Dictionary<int, Dictionary<int, ChessPiece>> scenario) {
@@ -114,25 +114,14 @@ namespace ChessClassLibrary
                             else { enemy = PieceColor.Black; }
 
                             if (HelperMaths.EnemyPawnCheck(i, j, scenario, enemy) || HelperMaths.HorizontalThreatCheck(i, j, scenario, enemy) ||
-                                HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy))
+                                HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy) || HelperMaths.VerticalThreatCheck(i, j, scenario, enemy))
                             {
                                 KingChecked = true;
                             }
-
-                            //KingChecked = HelperMaths.EnemyPawnCheck(i, j, scenario, enemy);
-                            //KingChecked = HelperMaths.HorizontalThreatCheck(i, j, scenario, enemy);
-                            //KingChecked = HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy);
-                            //KingChecked = HelperMaths.HorseThreatCheck(i, j, scenario, enemy);
-
                             break;
                         }
                     }                    
                 }
-            }
-
-            if (KingChecked)
-            {
-
             }
 
             return KingChecked;            
@@ -159,8 +148,6 @@ namespace ChessClassLibrary
 
             EventsMediator.OnWinner(null, args);            
         }
-
-
 
     }
 }
