@@ -8,6 +8,7 @@ namespace ChessClassLibrary
     public class PlayerEventArgs : EventArgs
     {
         public PieceColor pieceColor { get; set; }
+        public Move move { get; set; }
     }
 
     public sealed class EventsMediator
@@ -42,6 +43,14 @@ namespace ChessClassLibrary
         public static void OnWinner(object sender, PlayerEventArgs e)
         {
             Winner?.Invoke(sender, e);
+        }
+
+        // ----------------------------------------------------------------
+
+        public static event EventHandler Undo;
+        public static void OnUndo(object sender, EventArgs e)
+        {
+            Undo?.Invoke(sender, e);
         }
     }
 }

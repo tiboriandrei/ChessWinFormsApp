@@ -36,12 +36,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelMouseLocation = new System.Windows.Forms.Label();
-            this.labelSelectedPiece = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelBlackTime = new System.Windows.Forms.Label();
             this.labelWhiteTime = new System.Windows.Forms.Label();
-            this.buttonClock = new System.Windows.Forms.Button();
-            this.buttonStopClock = new System.Windows.Forms.Button();
             this.labelWinner = new System.Windows.Forms.Label();
             this.buttonUndo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
@@ -101,26 +98,17 @@
             // labelMouseLocation
             // 
             this.labelMouseLocation.AutoSize = true;
-            this.labelMouseLocation.Location = new System.Drawing.Point(621, 47);
+            this.labelMouseLocation.Location = new System.Drawing.Point(621, 27);
             this.labelMouseLocation.Name = "labelMouseLocation";
             this.labelMouseLocation.Size = new System.Drawing.Size(54, 13);
             this.labelMouseLocation.TabIndex = 2;
             this.labelMouseLocation.Text = "Mouse at:";
             // 
-            // labelSelectedPiece
-            // 
-            this.labelSelectedPiece.AutoSize = true;
-            this.labelSelectedPiece.Location = new System.Drawing.Point(621, 64);
-            this.labelSelectedPiece.Name = "labelSelectedPiece";
-            this.labelSelectedPiece.Size = new System.Drawing.Size(81, 13);
-            this.labelSelectedPiece.TabIndex = 3;
-            this.labelSelectedPiece.Text = "Selected piece:";
-            // 
             // labelBlackTime
             // 
             this.labelBlackTime.AutoSize = true;
             this.labelBlackTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBlackTime.Location = new System.Drawing.Point(618, 92);
+            this.labelBlackTime.Location = new System.Drawing.Point(618, 103);
             this.labelBlackTime.Name = "labelBlackTime";
             this.labelBlackTime.Size = new System.Drawing.Size(126, 31);
             this.labelBlackTime.TabIndex = 4;
@@ -135,27 +123,6 @@
             this.labelWhiteTime.Size = new System.Drawing.Size(126, 31);
             this.labelWhiteTime.TabIndex = 5;
             this.labelWhiteTime.Text = "Time left:";
-            // 
-            // buttonClock
-            // 
-            this.buttonClock.Location = new System.Drawing.Point(749, 490);
-            this.buttonClock.Name = "buttonClock";
-            this.buttonClock.Size = new System.Drawing.Size(75, 23);
-            this.buttonClock.TabIndex = 6;
-            this.buttonClock.Text = "Clock";
-            this.buttonClock.UseVisualStyleBackColor = true;
-            this.buttonClock.Click += new System.EventHandler(this.buttonClock_Click);
-            // 
-            // buttonStopClock
-            // 
-            this.buttonStopClock.Location = new System.Drawing.Point(749, 519);
-            this.buttonStopClock.Name = "buttonStopClock";
-            this.buttonStopClock.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.buttonStopClock.Size = new System.Drawing.Size(75, 23);
-            this.buttonStopClock.TabIndex = 7;
-            this.buttonStopClock.Text = "Stop Clock";
-            this.buttonStopClock.UseVisualStyleBackColor = true;
-            this.buttonStopClock.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelWinner
             // 
@@ -175,6 +142,7 @@
             this.buttonUndo.TabIndex = 9;
             this.buttonUndo.Text = "Undo";
             this.buttonUndo.UseVisualStyleBackColor = true;
+            this.buttonUndo.Click += new System.EventHandler(this.buttonUndo_Click);
             // 
             // Form1
             // 
@@ -183,11 +151,8 @@
             this.ClientSize = new System.Drawing.Size(836, 554);
             this.Controls.Add(this.buttonUndo);
             this.Controls.Add(this.labelWinner);
-            this.Controls.Add(this.buttonStopClock);
-            this.Controls.Add(this.buttonClock);
             this.Controls.Add(this.labelWhiteTime);
             this.Controls.Add(this.labelBlackTime);
-            this.Controls.Add(this.labelSelectedPiece);
             this.Controls.Add(this.labelMouseLocation);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
@@ -214,12 +179,9 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelMouseLocation;
-        private System.Windows.Forms.Label labelSelectedPiece;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label labelBlackTime;
         private System.Windows.Forms.Label labelWhiteTime;
-        private System.Windows.Forms.Button buttonClock;
-        private System.Windows.Forms.Button buttonStopClock;
         private System.Windows.Forms.Label labelWinner;
         private System.Windows.Forms.Button buttonUndo;
     }

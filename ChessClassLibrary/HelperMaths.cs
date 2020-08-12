@@ -69,24 +69,18 @@ namespace ChessClassLibrary
             {
                 if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
                 {
-                    if (scenario[kingX - 1][kingY - 1] != null)
-                    {
-                        if (scenario[kingX - 1][kingY - 1].ToString() == enemy.ToString() + "Pawn")
+                        if (scenario[kingX - 1][kingY - 1]?.ToString() == enemy.ToString() + "Pawn")
                         {
                             return true;
-                        }
-                    }
+                        }                    
                 }
 
                 if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
                 {
-                    if (scenario[kingX - 1][kingY + 1] != null)
-                    {
-                        if (scenario[kingX - 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
+                        if (scenario[kingX - 1][kingY + 1]?.ToString() == enemy.ToString() + "Pawn")
                         {
                             return true;
-                        }
-                    }
+                        }                    
                 }
             }
 
@@ -94,26 +88,91 @@ namespace ChessClassLibrary
             {
                 if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
                 {
-                    if (scenario[kingX + 1][kingY - 1] != null)
-                    {
-                        if (scenario[kingX + 1][kingY - 1].ToString() == enemy.ToString() + "Pawn")
+                        if (scenario[kingX + 1][kingY - 1]?.ToString() == enemy.ToString() + "Pawn")
                         {
                             return true;
-                        }
-                    }
+                        }                    
                 }
 
                 if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
                 {
-                    if (scenario[kingX + 1][kingY + 1] != null)
-                    {
-                        if (scenario[kingX + 1][kingY + 1].ToString() == enemy.ToString() + "Pawn")
+                        if (scenario[kingX + 1][kingY + 1]?.ToString() == enemy.ToString() + "Pawn")
                         {
                             return true;
-                        }
-                    }
+                        }                    
                 }
             }
+            return false;
+        }
+
+        public static bool HorseThreatCheck(int kingX, int kingY, Dictionary<int, Dictionary<int, ChessPiece>> scenario, PieceColor enemy)
+        {
+                if (HelperMaths.IsInRange(kingX - 2, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
+                {
+                    if (scenario[kingX - 2][kingY - 1]?.ToString() == enemy.ToString() + "Horseman")
+                    {
+                        return true;
+                    }
+                }
+
+            if (HelperMaths.IsInRange(kingX - 2, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
+            {
+                if (scenario[kingX - 2][kingY + 1]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            if (HelperMaths.IsInRange(kingX + 2, 0, 7) && HelperMaths.IsInRange(kingY - 1, 0, 7))
+            {
+                if (scenario[kingX + 2][kingY - 1]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            if (HelperMaths.IsInRange(kingX + 2, 0, 7) && HelperMaths.IsInRange(kingY + 1, 0, 7))
+            {
+                if (scenario[kingX + 2][kingY + 1]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            //
+
+            if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY + 2, 0, 7))
+            {
+                if (scenario[kingX + 1][kingY + 2]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY + 2, 0, 7))
+            {
+                if (scenario[kingX - 1][kingY + 2]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            if (HelperMaths.IsInRange(kingX + 1, 0, 7) && HelperMaths.IsInRange(kingY - 2, 0, 7))
+            {
+                if (scenario[kingX + 1][kingY - 2]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
+            if (HelperMaths.IsInRange(kingX - 1, 0, 7) && HelperMaths.IsInRange(kingY - 2, 0, 7))
+            {
+                if (scenario[kingX - 1][kingY - 2]?.ToString() == enemy.ToString() + "Horseman")
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 

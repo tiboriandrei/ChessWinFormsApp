@@ -70,6 +70,12 @@ namespace ChessClassLibrary
             return clone;
         }
 
+        public static void UndoMove(Move lastMove)
+        {
+            Layout[lastMove.Origin.Item1][lastMove.Origin.Item2] = Layout[lastMove.Destination.Item1][lastMove.Destination.Item2];
+            Layout[lastMove.Destination.Item1][lastMove.Destination.Item2] = lastMove.capturedPiece;
+        }
+
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetScenario(Move testMove)
         {
             Dictionary<int, Dictionary<int, ChessPiece>> scenario = HelperMaths.DeepClone(Layout);
@@ -82,16 +88,12 @@ namespace ChessClassLibrary
 
         public static void UpdateLayout(Move legalMove) 
         {
+            legalMove.capturedPiece = Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] != null ? Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] : null;
+
+            EventsMediator.OnPlayerMoved(null, new PlayerEventArgs { pieceColor = Layout[legalMove.Origin.Item1][legalMove.Origin.Item2].PieceColor , move = legalMove});
+
             Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] = Layout[legalMove.Origin.Item1][legalMove.Origin.Item2];
             Layout[legalMove.Origin.Item1][legalMove.Origin.Item2] = null;
-
-            PlayerEventArgs args = new PlayerEventArgs
-            {
-                pieceColor = Layout[legalMove.Destination.Item1][legalMove.Destination.Item2].PieceColor
-            };
-
-            EventsMediator.OnPlayerMoved(null, args);
-        }
-                
+        }                
     }
 }

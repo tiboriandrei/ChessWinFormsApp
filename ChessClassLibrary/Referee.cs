@@ -17,11 +17,14 @@ namespace ChessClassLibrary
 
         private static List<Move> AvailableMoves = new List<Move>();
 
+        private static Stack<Move> moveHistory;
         //private static ConcurrentDictionary<int, Move> myThrSafeDict = new ConcurrentDictionary<int, Move>();
 
         public static void InitReferee() {
-            EventsMediator.PlayerMoved += ChangePlayerTurn;
-            EventsMediator.TimesUp += EndGame; 
+            EventsMediator.PlayerMoved += HandlePlayerMove;
+            EventsMediator.TimesUp += EndGame;
+            EventsMediator.Undo += UndoMove;
+            moveHistory = new Stack<Move>();
         }
                
         public static List<Move> GetAvailableMoves(Tuple<int, int> selectedPieceCoords) {
@@ -29,22 +32,15 @@ namespace ChessClassLibrary
             AvailableMoves.Clear();
             var Layout = GameState.GetGameState();
 
-            if (Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2] == null)
+            if (Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2] == null || 
+                Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].PieceColor != PlayerTurn)
             {
-                return new List<Move>();
-            }
-            if (Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].PieceColor != PlayerTurn)
-            {
-                return new List<Move>();
-            }
+                return AvailableMoves;
+            }            
 
             if (CheckForAnyMovesLeft(Layout) == 0)
             {
-                PlayerEventArgs args = new PlayerEventArgs
-                {
-                    pieceColor = PlayerTurn
-                };
-                EventsMediator.OnWinner(null, args);
+                EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });
                 return AvailableMoves;
             }
 
@@ -100,54 +96,46 @@ namespace ChessClassLibrary
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (scenario[i][j] != null)
-                    {
-                        if (scenario[i][j].ToString() == PlayerTurn.ToString() + "King")
+                        if (scenario[i][j]?.ToString() == PlayerTurn.ToString() + "King")
                         {
                             KingChecked = false;
 
-                            PieceColor enemy;
-                            if (PlayerTurn == PieceColor.Black)
-                            {
-                                enemy = PieceColor.White;
-                            }
-                            else { enemy = PieceColor.Black; }
-
+                            PieceColor enemy = PlayerTurn == PieceColor.Black ? enemy = PieceColor.White : enemy = PieceColor.Black;
+                        
                             if (HelperMaths.EnemyPawnCheck(i, j, scenario, enemy) || HelperMaths.HorizontalThreatCheck(i, j, scenario, enemy) ||
-                                HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy) || HelperMaths.VerticalThreatCheck(i, j, scenario, enemy))
+                                HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy) || HelperMaths.VerticalThreatCheck(i, j, scenario, enemy) 
+                                || HelperMaths.HorseThreatCheck(i, j, scenario, enemy))
                             {
                                 KingChecked = true;
                             }
                             break;
-                        }
-                    }                    
+                        }                                        
                 }
             }
 
             return KingChecked;            
         }
 
-        private static void ChangePlayerTurn(object sender, PlayerEventArgs e)
+        private static void HandlePlayerMove(object sender, PlayerEventArgs e)
         {
-            if (PlayerTurn == PieceColor.White)
+            moveHistory.Push(e.move);
+            PlayerTurn = PlayerTurn == PieceColor.White ? PlayerTurn = PieceColor.Black : PlayerTurn = PieceColor.White;                       
+        }
+        public static void UndoMove(object sender, EventArgs e)
+        {
+            try
             {
-                PlayerTurn = PieceColor.Black;                
+                GameState.UndoMove(moveHistory.Pop());
             }
-            else
+            catch (Exception)
             {
-                PlayerTurn = PieceColor.White;
-            }
+
+            }           
         }
 
         private static void EndGame(object sender, EventArgs e) {
 
-            PlayerEventArgs args = new PlayerEventArgs
-            {
-                pieceColor = PlayerTurn
-            };
-
-            EventsMediator.OnWinner(null, args);            
+            EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });            
         }
-
     }
 }

@@ -25,12 +25,12 @@ namespace ChessWinFormsApp
 
         Thread t1;
 
-        List<Move> availableMoves;
+        List<Move> availableMoves;        
         Bitmap availableSquare;
 
         public Dictionary<string, Bitmap> PieceBitmaps { get; set; } = new Dictionary<string, Bitmap>();
 
-        private Game newGame = null;
+        private Game currentGame = null;
         public Form1()
         {
             InitializeComponent();
@@ -61,8 +61,8 @@ namespace ChessWinFormsApp
 
         public void GameOver(object sender, PlayerEventArgs e) {
             labelWinner.Text = e.pieceColor.ToString() + " lost";
-            newGame._ChessClock._BlacksTimer.StopClock();
-            newGame._ChessClock._WhitesTimer.StopClock();
+            currentGame._ChessClock._BlacksTimer.StopClock();
+            currentGame._ChessClock._WhitesTimer.StopClock();
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,9 +70,9 @@ namespace ChessWinFormsApp
             GameState.InitGameState();
             Referee.InitReferee();
 
-            EventsMediator.Winner += GameOver;
+            EventsMediator.Winner += GameOver;            
 
-            newGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);
+            currentGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);
             availableMoves = new List<Move>();
 
             t1 = new Thread(RefreshClock);
@@ -168,14 +168,8 @@ namespace ChessWinFormsApp
         private void RefreshClock() {
             while (true) {
                 MethodInvoker mi = delegate () {
-                    if (newGame._ChessClock._BlacksTimer.GetTimeLeft().TotalSeconds <= 0 || newGame._ChessClock._WhitesTimer.GetTimeLeft().TotalSeconds <= 0)
-                    {
-                        newGame._ChessClock._BlacksTimer.StopClock();
-                        newGame._ChessClock._WhitesTimer.StopClock();
-                    }
-
-                    labelBlackTime.Text = newGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"mm\:ss");      // hh\:mm\:ss\:fff
-                    labelWhiteTime.Text = newGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"mm\:ss");
+                    labelBlackTime.Text = currentGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"mm\:ss");      // hh\:mm\:ss\:fff
+                    labelWhiteTime.Text = currentGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"mm\:ss");
                 };
                 this.Invoke(mi);
             }
@@ -186,7 +180,7 @@ namespace ChessWinFormsApp
             double ratio = Math.Min(this.Width / 60, this.Height / 60);
             TileWidth = (int)(4 * ratio);
             TileHeight = (int)(4 * ratio);
-            if (newGame != null)
+            if (currentGame != null)
             {
                 Draw();
             }            
@@ -239,24 +233,16 @@ namespace ChessWinFormsApp
             }
         }
 
-        private void buttonClock_Click(object sender, EventArgs e)
-        {
-            newGame._ChessClock._BlacksTimer.ResumeClock();
-            newGame._ChessClock._WhitesTimer.ResumeClock();
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (t1 != null)
-            {
-                t1.Abort();
-            }            
+            t1?.Abort();                       
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonUndo_Click(object sender, EventArgs e)
         {
-            newGame._ChessClock._BlacksTimer.StopClock();
-            newGame._ChessClock._WhitesTimer.StopClock();
-        }        
+            EventsMediator.OnUndo(null, EventArgs.Empty);
+            Draw();
+        }
+ 
     }
 }
