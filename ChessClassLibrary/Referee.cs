@@ -119,7 +119,7 @@ namespace ChessClassLibrary
         private static void HandlePlayerMove(object sender, PlayerEventArgs e)
         {
             moveHistory.Push(e.move);
-            PlayerTurn = PlayerTurn == PieceColor.White ? PlayerTurn = PieceColor.Black : PlayerTurn = PieceColor.White;                       
+            PlayerTurn = PlayerTurn == PieceColor.White ? PieceColor.Black : PieceColor.White;                       
         }
         public static void UndoMove(object sender, EventArgs e)
         {
