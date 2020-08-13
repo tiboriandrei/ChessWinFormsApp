@@ -2,7 +2,10 @@
 
 namespace PokerClassLibrary
 {
-    public class Dealer
+    public static class Dealer
     {
+        public static void InitDealer() { 
+            
+        }
     }
 }

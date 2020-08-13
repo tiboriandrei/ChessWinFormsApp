@@ -6,6 +6,11 @@ namespace PokerClassLibrary
 {
     public class Card
     {
-        public Tuple<int, CardColor> PCard { get; set; }
+        public Card(Tuple<int, CardColor> type)
+        {
+            Type = type;
+        }
+
+        public Tuple<int, CardColor> Type { get; set; }
     }
 }
