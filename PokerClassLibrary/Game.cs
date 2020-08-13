@@ -4,8 +4,12 @@ using System.Text;
 
 namespace PokerClassLibrary
 {
-    public class Game
+    public static class Game
     {
-        public List<Player> Players { get; set; }
+        public static List<Player> Players { get; set; }
+
+        public static void AddPlayer(Player player) {
+            Players.Add(player);
+        }
     }
 }
