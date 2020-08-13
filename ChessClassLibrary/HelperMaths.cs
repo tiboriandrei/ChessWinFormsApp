@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary.Pieces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,8 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace ChessClassLibrary
 {
@@ -54,6 +57,38 @@ namespace ChessClassLibrary
                 ms.Position = 0;
 
                 return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        public static void SaveObj<T>(T saveableObject, string fileName, bool append = false) where T : new()
+        {
+            TextWriter writer = null;
+            try
+            {
+                var contentsToWriteToFile = JsonConvert.SerializeObject(saveableObject);
+                writer = new StreamWriter(@".\" + fileName, append);
+                writer.Write(contentsToWriteToFile);
+            }
+            finally
+            {
+                if (writer != null)
+                    writer.Close();
+            }
+        }
+
+        public static T LoadSerializedObj<T>(string filePath) where T : new()
+        {
+            TextReader reader = null;
+            try
+            {
+                reader = new StreamReader(filePath);
+                var fileContents = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<T>(fileContents);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
             }
         }
 

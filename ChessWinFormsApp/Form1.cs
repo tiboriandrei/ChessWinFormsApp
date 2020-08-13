@@ -1,14 +1,10 @@
 ﻿using ChessClassLibrary;
+using GameRepository.Factory;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChessWinFormsApp
@@ -16,6 +12,8 @@ namespace ChessWinFormsApp
     public partial class Form1 : Form
     {
         private Bitmap _Bitmap;
+
+        private Game currentGame = null;
         private int TileWidth { get; set; } = 60;
         private int TileHeight { get; set; } = 60;
 
@@ -30,28 +28,21 @@ namespace ChessWinFormsApp
 
         public Dictionary<string, Bitmap> PieceBitmaps { get; set; } = new Dictionary<string, Bitmap>();
 
-        private Game currentGame = null;
         public Form1()
         {
             InitializeComponent();
 
-            //----------------------------------------------------------------------- 
+            GameState.InitGameState();
+            Referee.InitReferee();
+            EventsMediator.Winner += GameOver;
 
-            availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\alphasquare.png");
+            //currentGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);                       
+            //string fullyQualifiedName = currentGame.GetType().AssemblyQualifiedName;
+            availableMoves = new List<Move>();
 
-            PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitepawn.png"));
-            PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiterook.png"));
-            PieceBitmaps.Add("WhiteKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiteking.png"));
-            PieceBitmaps.Add("WhiteHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitehorseman.png"));
-            PieceBitmaps.Add("WhiteMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitemadman.png"));
-            PieceBitmaps.Add("WhiteQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitequeen.png"));
+            t1 = new Thread(RefreshClock);
 
-            PieceBitmaps.Add("BlackPawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackpawn.png"));
-            PieceBitmaps.Add("BlackKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackking.png"));
-            PieceBitmaps.Add("BlackHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackhorseman.png"));
-            PieceBitmaps.Add("BlackMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackmadman.png"));
-            PieceBitmaps.Add("BlackQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackqueen.png"));
-            PieceBitmaps.Add("BlackRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackrook.png"));          
+            LoadImages();
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,22 +56,6 @@ namespace ChessWinFormsApp
             currentGame._ChessClock._WhitesTimer.StopClock();
         }
 
-        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GameState.InitGameState();
-            Referee.InitReferee();
-
-            EventsMediator.Winner += GameOver;            
-
-            currentGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);
-            availableMoves = new List<Move>();
-
-            t1 = new Thread(RefreshClock);
-            t1.Start();
-
-            Draw();                        
-        }
-
         private void Draw() {
             var tileSize = new Size(TileWidth, TileHeight);
             
@@ -92,6 +67,11 @@ namespace ChessWinFormsApp
                 DrawAvailableMoves(_Bitmap);
             }            
             pictureBox1.Image = _Bitmap;
+
+            if (!t1.IsAlive)
+            {
+                t1.Start();
+            }            
         }
 
         private Bitmap CreateBoard(Size tileSize)
@@ -168,8 +148,8 @@ namespace ChessWinFormsApp
         private void RefreshClock() {
             while (true) {
                 MethodInvoker mi = delegate () {
-                    labelBlackTime.Text = currentGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"mm\:ss");      // hh\:mm\:ss\:fff
-                    labelWhiteTime.Text = currentGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"mm\:ss");
+                    labelBlackTime.Text = currentGame._ChessClock._BlacksTimer.GetTimeLeft().ToString(@"hh\:mm\:ss");      // hh\:mm\:ss\:fff
+                    labelWhiteTime.Text = currentGame._ChessClock._WhitesTimer.GetTimeLeft().ToString(@"hh\:mm\:ss");
                 };
                 this.Invoke(mi);
             }
@@ -238,11 +218,66 @@ namespace ChessWinFormsApp
             t1?.Abort();                       
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelperMaths.SaveObj(GameState.GetGameState(), "tempName");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int size = -1;
+            string file;
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                file = openFileDialog1.FileName;
+                try
+                {
+                    HelperMaths.LoadSerializedObj<Dictionary<int, Dictionary<int, ChessPiece>>>(file);
+                }
+                catch (Exception)
+                {
+                                        
+                }
+                
+            }
+            
+        }
+
         private void buttonUndo_Click(object sender, EventArgs e)
         {
             EventsMediator.OnUndo(null, EventArgs.Empty);
             Draw();
         }
- 
+
+        private void blitzToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentGame = GameFactory.GetGame(GameModeOption.Blitz);
+            Draw();
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentGame = GameFactory.GetGame(GameModeOption.Normal);
+            Draw();
+        }
+
+        private void LoadImages() {
+            availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\alphasquare.png");
+
+            PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitepawn.png"));
+            PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiterook.png"));
+            PieceBitmaps.Add("WhiteKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiteking.png"));
+            PieceBitmaps.Add("WhiteHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitehorseman.png"));
+            PieceBitmaps.Add("WhiteMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitemadman.png"));
+            PieceBitmaps.Add("WhiteQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitequeen.png"));
+
+            PieceBitmaps.Add("BlackPawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackpawn.png"));
+            PieceBitmaps.Add("BlackKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackking.png"));
+            PieceBitmaps.Add("BlackHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackhorseman.png"));
+            PieceBitmaps.Add("BlackMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackmadman.png"));
+            PieceBitmaps.Add("BlackQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackqueen.png"));
+            PieceBitmaps.Add("BlackRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackrook.png"));
+        }
     }
 }

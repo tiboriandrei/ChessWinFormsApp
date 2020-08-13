@@ -41,6 +41,9 @@
             this.labelWhiteTime = new System.Windows.Forms.Label();
             this.labelWinner = new System.Windows.Forms.Label();
             this.buttonUndo = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blitzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -68,22 +71,26 @@
             // 
             // newGameToolStripMenuItem
             // 
+            this.newGameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.normalToolStripMenuItem,
+            this.blitzToolStripMenuItem});
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.newGameToolStripMenuItem.Text = "New game";
-            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newGameToolStripMenuItem.Text = "New game";           
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Load";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -108,7 +115,7 @@
             // 
             this.labelBlackTime.AutoSize = true;
             this.labelBlackTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBlackTime.Location = new System.Drawing.Point(618, 103);
+            this.labelBlackTime.Location = new System.Drawing.Point(602, 103);
             this.labelBlackTime.Name = "labelBlackTime";
             this.labelBlackTime.Size = new System.Drawing.Size(126, 31);
             this.labelBlackTime.TabIndex = 4;
@@ -118,7 +125,7 @@
             // 
             this.labelWhiteTime.AutoSize = true;
             this.labelWhiteTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelWhiteTime.Location = new System.Drawing.Point(618, 436);
+            this.labelWhiteTime.Location = new System.Drawing.Point(602, 436);
             this.labelWhiteTime.Name = "labelWhiteTime";
             this.labelWhiteTime.Size = new System.Drawing.Size(126, 31);
             this.labelWhiteTime.TabIndex = 5;
@@ -138,17 +145,35 @@
             // 
             this.buttonUndo.Location = new System.Drawing.Point(84, 528);
             this.buttonUndo.Name = "buttonUndo";
-            this.buttonUndo.Size = new System.Drawing.Size(43, 23);
+            this.buttonUndo.Size = new System.Drawing.Size(69, 36);
             this.buttonUndo.TabIndex = 9;
             this.buttonUndo.Text = "Undo";
             this.buttonUndo.UseVisualStyleBackColor = true;
             this.buttonUndo.Click += new System.EventHandler(this.buttonUndo_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.normalToolStripMenuItem.Text = "Normal";
+            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            // 
+            // blitzToolStripMenuItem
+            // 
+            this.blitzToolStripMenuItem.Name = "blitzToolStripMenuItem";
+            this.blitzToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.blitzToolStripMenuItem.Text = "Blitz";
+            this.blitzToolStripMenuItem.Click += new System.EventHandler(this.blitzToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 554);
+            this.ClientSize = new System.Drawing.Size(836, 576);
             this.Controls.Add(this.buttonUndo);
             this.Controls.Add(this.labelWinner);
             this.Controls.Add(this.labelWhiteTime);
@@ -184,6 +209,9 @@
         private System.Windows.Forms.Label labelWhiteTime;
         private System.Windows.Forms.Label labelWinner;
         private System.Windows.Forms.Button buttonUndo;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blitzToolStripMenuItem;
     }
 }
 

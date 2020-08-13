@@ -9,7 +9,7 @@ namespace ChessClassLibrary
     [Serializable]
     public static class GameState 
     {
-        private static readonly Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
+        private static Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
         public static void InitGameState() {
                         
@@ -74,6 +74,11 @@ namespace ChessClassLibrary
         {
             Layout[lastMove.Origin.Item1][lastMove.Origin.Item2] = Layout[lastMove.Destination.Item1][lastMove.Destination.Item2];
             Layout[lastMove.Destination.Item1][lastMove.Destination.Item2] = lastMove.capturedPiece;
+        }
+
+        public static void LoadGame(Dictionary<int, Dictionary<int, ChessPiece>> loadedGame)
+        {
+            Layout = loadedGame;
         }
 
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetScenario(Move testMove)

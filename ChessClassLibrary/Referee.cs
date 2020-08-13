@@ -121,6 +121,7 @@ namespace ChessClassLibrary
             moveHistory.Push(e.move);
             PlayerTurn = PlayerTurn == PieceColor.White ? PieceColor.Black : PieceColor.White;                       
         }
+
         public static void UndoMove(object sender, EventArgs e)
         {
             try

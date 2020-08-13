@@ -11,3 +11,15 @@ E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.csproj.CopyComplete
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.exe
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\Newtonsoft.Json.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\Newtonsoft.Json.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\GameRepository.Factory.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\GameRepository.Factory.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Configuration.ConfigurationManager.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.AccessControl.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Permissions.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Principal.Windows.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Configuration.ConfigurationManager.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.AccessControl.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Permissions.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Principal.Windows.xml
