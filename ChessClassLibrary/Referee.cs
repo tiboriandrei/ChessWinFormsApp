@@ -50,7 +50,7 @@ namespace ChessClassLibrary
             return AvailableMoves;
         }
 
-        private static int CheckForAnyMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> Layout) {
+        private static int CheckForAnyMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> layout) {
             int movesToAvoidMate = 0;
             var test = GameState.GetGameState();
             for (int i = 0; i < 8; i++)
@@ -65,7 +65,7 @@ namespace ChessClassLibrary
                     {
                         if (test[i][j].PieceColor == PlayerTurn)
                         {
-                            List<Move> pieceAvMoves = Layout[i][j].GetAvailableMoves(Coordinate.GetInstance.GetCoord(i, j)); ;
+                            List<Move> pieceAvMoves = layout[i][j].GetAvailableMoves(Coordinate.GetInstance.GetCoord(i, j)); ;
                             DeleteIllegalMoves(pieceAvMoves);
                             movesToAvoidMate += pieceAvMoves.Count;
                         }

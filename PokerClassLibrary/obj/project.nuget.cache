@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "tXQbtlVox5xF+FBc0jDkfMktWwY3VbdC27Xq/DUz3B3uQmkq+w2F88EOROoYTWrKSUqk8Uk10aX7p6BBXoj27A==",
+  "success": true,
+  "projectFilePath": "E:\\ChessWinFormsApp\\ChessWinFormsApp\\PokerClassLibrary\\PokerClassLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ANDREI\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
