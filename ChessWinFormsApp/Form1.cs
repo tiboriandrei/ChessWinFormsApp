@@ -263,21 +263,21 @@ namespace ChessWinFormsApp
         }
 
         private void LoadImages() {
-            availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\alphasquare.png");
+            availableSquare = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\alphasquare.png");
 
-            PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitepawn.png"));
-            PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiterook.png"));
-            PieceBitmaps.Add("WhiteKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whiteking.png"));
-            PieceBitmaps.Add("WhiteHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitehorseman.png"));
-            PieceBitmaps.Add("WhiteMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitemadman.png"));
-            PieceBitmaps.Add("WhiteQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\whitequeen.png"));
+            PieceBitmaps.Add("WhitePawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whitepawn.png"));
+            PieceBitmaps.Add("WhiteRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whiterook.png"));
+            PieceBitmaps.Add("WhiteKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whiteking.png"));
+            PieceBitmaps.Add("WhiteHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whitehorseman.png"));
+            PieceBitmaps.Add("WhiteMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whitemadman.png"));
+            PieceBitmaps.Add("WhiteQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\whitequeen.png"));
 
-            PieceBitmaps.Add("BlackPawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackpawn.png"));
-            PieceBitmaps.Add("BlackKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackking.png"));
-            PieceBitmaps.Add("BlackHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackhorseman.png"));
-            PieceBitmaps.Add("BlackMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackmadman.png"));
-            PieceBitmaps.Add("BlackQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackqueen.png"));
-            PieceBitmaps.Add("BlackRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\blackrook.png"));
+            PieceBitmaps.Add("BlackPawn", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackpawn.png"));
+            PieceBitmaps.Add("BlackKing", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackking.png"));
+            PieceBitmaps.Add("BlackHorseman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackhorseman.png"));
+            PieceBitmaps.Add("BlackMadman", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackmadman.png"));
+            PieceBitmaps.Add("BlackQueen", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackqueen.png"));
+            PieceBitmaps.Add("BlackRook", new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\chessRes\\blackrook.png"));
         }
     }
 }

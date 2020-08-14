@@ -11,6 +11,7 @@ namespace PokerClassLibrary
         
         public static void InitDealer() {
             Deck = Deck.GetInstance;
+            PokerEventsMediator.AddPlayer += AddPlayer;
         }
 
         public static void StartNewRound() {
@@ -20,9 +21,8 @@ namespace PokerClassLibrary
             }
             Deck.Cards = Shuffle(Deck.Cards);
 
-            Round.FloppedCards.Clear();
-            Round.Pot = 0;
-
+            Round.NewRound();
+            
             //Round round = new Round(Game.Players, new List<Card>());
         }
 
@@ -36,13 +36,13 @@ namespace PokerClassLibrary
             };
         }
 
-        public static void DealOneCard()
-        {
+        public static void DealOneCard() {
             CutCards.Add(Deck.Cards.Pop());
-            List<Card> TurnRiver = new List<Card>
-            {
-                Deck.Cards.Pop(),                
-            };
+            Card TurnRiver = Deck.Cards.Pop();
+        }
+
+        private static void AddPlayer(object sender, PlayerDataEventArgs e) {
+            Game.AddPlayer(new Player(e.Name, e.Chips));
         }
         
         public static void MoveChips() { 

@@ -11,5 +11,10 @@ namespace PokerClassLibrary
         public static void AddPlayer(Player player) {
             Players.Add(player);
         }
+
+        public static void RemovePlayer(Player player)
+        {
+            Players.Remove(player);
+        }
     }
 }

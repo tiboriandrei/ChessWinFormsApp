@@ -23,3 +23,4 @@ E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Configura
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.AccessControl.xml
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Permissions.xml
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.Principal.Windows.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.FormPoker.resources

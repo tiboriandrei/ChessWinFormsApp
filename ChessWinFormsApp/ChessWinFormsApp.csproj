@@ -120,6 +120,10 @@
       <Project>{61354514-dd0b-4cbc-8e2e-7715629ebb56}</Project>
       <Name>GameRepository.Factory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokerClassLibrary\PokerClassLibrary.csproj">
+      <Project>{4527d78a-948f-4e59-bfe0-3233cf739ecf}</Project>
+      <Name>PokerClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
