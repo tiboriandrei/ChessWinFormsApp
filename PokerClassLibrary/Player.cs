@@ -14,6 +14,11 @@ namespace PokerClassLibrary
 
         public string Name { get; set; }        
         public int Chips { get; set; }
-        public Tuple<Card, Card> Hand { get; set; }
+        private Tuple<Card, Card> Hand { get; set; }
+
+        public void DealHand(Tuple<Card, Card> hand) {
+            
+            Hand = hand;
+        }
     }
 }

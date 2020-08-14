@@ -17,6 +17,7 @@ namespace ChessWinFormsApp
         public FormPoker()
         {
             InitializeComponent();
+            Dealer.InitDealer();
             Draw();
         }
 
@@ -25,7 +26,7 @@ namespace ChessWinFormsApp
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void buttonAddPlayer_Click(object sender, PlayerDataEventArgs e)
+        private void buttonAddPlayer_Click(object sender, EventArgs e)
         {
             PlayerDataEventArgs args = new PlayerDataEventArgs
             {

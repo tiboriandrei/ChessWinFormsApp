@@ -6,12 +6,13 @@ namespace PokerClassLibrary
 {
     public static class Round
     { 
-        //public static List<Player> Players { get; set; }
+        public static List<Player> Players { get; set; }
         public static int Pot { get; private set; }
         public static List<Card> FloppedCards { get; private set; } = new List<Card>();
 
         public static void NewRound()
         {
+            Players = Game.Players;
             Pot = 0;
             FloppedCards.Clear();
         }
