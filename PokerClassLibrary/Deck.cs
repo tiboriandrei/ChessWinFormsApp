@@ -12,7 +12,7 @@ namespace PokerClassLibrary
         public Stack<Card> Cards { get; set; } = new Stack<Card>();
 
         private Deck() {            
-            for (int i = 1; i <= 14; i++)
+            for (int i = 1; i < 14; i++)
             {
                 Cards.Push(new Card(Tuple.Create(i, CardColor.BlackHeart)));
                 Cards.Push(new Card(Tuple.Create(i, CardColor.RedHeart)));

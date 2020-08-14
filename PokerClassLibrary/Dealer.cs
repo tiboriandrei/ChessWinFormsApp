@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace PokerClassLibrary
 {
@@ -11,7 +12,7 @@ namespace PokerClassLibrary
         
         public static void InitDealer() {
             Deck = Deck.GetInstance;
-            PokerEventsMediator.AddPlayer += AddPlayer;
+            PokerEventsMediator.AddPlayer += AddPlayer;            
         }
 
         private static void StartNewRound() {
@@ -26,9 +27,10 @@ namespace PokerClassLibrary
             foreach (var player in Round.Players)
             {
                 DealHand(player);
+                Thread.Sleep(500);                
             }
 
-            //draw cards
+            PokerEventsMediator.OnUpdateGraphics(null, EventArgs.Empty);
 
             StartBets();
 
@@ -96,8 +98,15 @@ namespace PokerClassLibrary
 
         private static Stack<T> Shuffle<T>(Stack<T> stack)
         {
-            List<T> list = (from item in stack
-                            select stack.Pop()).ToList();
+            List<T> list = new List<T>();
+            for (int i = 0; i < stack.Count; i++)
+            {
+                list.Add(stack.Pop());
+            }
+
+
+            //List<T> list = (from item in stack
+            //                select stack.Pop()).ToList();
 
             Random r = new Random(0);
             for (int i = list.Count - 1; i > 0; i--)

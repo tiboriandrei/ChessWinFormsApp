@@ -7,6 +7,7 @@ namespace PokerClassLibrary
     public class PlayerDataEventArgs : EventArgs {
         public string Name { get; set; }
         public int Chips { get; set; }
+        public Tuple<Card, Card> Hand { get; set; }
     }
 
     public sealed class PokerEventsMediator
@@ -27,6 +28,30 @@ namespace PokerClassLibrary
             AddPlayer?.Invoke(null, e);
         }
 
-        
+        // ----------------------------------------------------------------
+
+        public static event EventHandler UpdateGraphics;
+        public static void OnUpdateGraphics(object sender, EventArgs e)
+        {
+            UpdateGraphics?.Invoke(null, e);
+        }
+
+        // ----------------------------------------------------------------
+
+        public static event EventHandler RequestHandData;
+        public static void OnRequestHandData(object sender, EventArgs e)
+        {
+            RequestHandData?.Invoke(null, e);
+        }
+
+        // ----------------------------------------------------------------
+
+        public static event EventHandler<PlayerDataEventArgs> SendData;
+        public static void OnSendData(object sender, PlayerDataEventArgs e)
+        {
+            SendData?.Invoke(null, e);
+        }
+
+
     }
 }
