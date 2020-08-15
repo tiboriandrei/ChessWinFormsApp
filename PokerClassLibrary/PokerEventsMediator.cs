@@ -16,6 +16,10 @@ namespace PokerClassLibrary
         public int BetAmount { get; set; }
     }
 
+    public class FlopEventArgs : EventArgs {
+        public List<Card> FloppedCards { get; set; }        
+    }
+
     public sealed class PokerEventsMediator
     {
         private static readonly PokerEventsMediator _Instance = new PokerEventsMediator();
@@ -57,21 +61,22 @@ namespace PokerClassLibrary
         {
             PlayerAction?.Invoke(sender, e);
         }
-
-        // ----------------------------------------------------------------
-
-        public static event EventHandler<PlayerDataEventArgs> SendData;
-        public static void OnSendData(object sender, PlayerDataEventArgs e)
-        {
-            SendData?.Invoke(null, e);
-        }
-
+           
         // ----------------------------------------------------------------
 
         public static event EventHandler TimesUp;
         public static void OnTimesUp(object sender, EventArgs e)
         {
             TimesUp?.Invoke(null, e);
+        }
+
+
+        // ----------------------------------------------------------------
+
+        public static event EventHandler Flop;
+        public static void OnFlop(object sender, EventArgs e)
+        {
+            Flop?.Invoke(null, e);
         }
 
 

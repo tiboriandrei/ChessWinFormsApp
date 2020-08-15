@@ -17,6 +17,8 @@ namespace PokerClassLibrary
             PokerEventsMediator.PlayerAction += HandlePlayerAction;
         }
 
+        private static Thread t1;
+
         private static void StartNewRound() {
             foreach (var card in CutCards) { Deck.Cards.Push(card); }
             foreach (var card in FloppedCards) { Deck.Cards.Push(card); }
@@ -28,12 +30,20 @@ namespace PokerClassLibrary
             foreach (var player in Round.Players) { DealHand(player); }
             PokerEventsMediator.OnUpdateGraphics(null, EventArgs.Empty);
 
-            Thread t1 = new Thread(StartBets);
+            t1 = new Thread(StartBets);
             t1.Start();
 
-            // wait for bids
+            while (t1.IsAlive) {
+                Thread.Sleep(10);
+            }
 
-            // DealFlop();
+            DealFlop();
+
+            FlopEventArgs flopArgs = new FlopEventArgs { FloppedCards = FloppedCards };
+            PokerEventsMediator.OnFlop(null, flopArgs);
+
+            t1 = new Thread(StartBets);
+            t1.Start();
 
             // wait for bids
 
@@ -48,21 +58,25 @@ namespace PokerClassLibrary
             //Round round = new Round(Game.Players, new List<Card>());
         }
 
-        private static PlayerAction action = PlayerAction.Wait;
+        private static PlayerAction action;
+        private static int PlayerBet = 0;
         public static void StartBets() {
             int placeAtTable = 0;
-            foreach (var player in Round.Players)
+
+            for (int i = 0; i < Round.Players.Count; i++)
             {
+                action = PlayerAction.Wait;
                 PlayerDataEventArgs args = new PlayerDataEventArgs
                 {
-                    Chips = player.Chips,
-                    PlaceAtTable = placeAtTable++                    
+                    Chips = Round.Players[i].Chips,
+                    PlaceAtTable = placeAtTable++
                 };
                 PokerEventsMediator.OnStartBet(null, args);
 
                 Clock.ResumeClock();
 
-                while (action == PlayerAction.Wait) {
+                while (action == PlayerAction.Wait)
+                {
                     Thread.Sleep(10);
                 }
 
@@ -73,15 +87,20 @@ namespace PokerClassLibrary
                     case PlayerAction.Check:
                         break;
                     case PlayerAction.Bet:
+                        Round.IncreasePot(PlayerBet);
                         break;
                     case PlayerAction.Fold:
-                        break;                    
+                        Round.Players.RemoveAt(i--);
+                        break;
                 }
-            }                             
+            }             
+            t1.Abort();
         }
 
         private static void HandlePlayerAction(object sender, PlayerActionEventArgs e) {
             action = e.Action;
+            PlayerBet = e.BetAmount;
+            Clock.InitClock(10);
         }
 
         private static void DealHand(Player player) {            
@@ -98,6 +117,7 @@ namespace PokerClassLibrary
                 Deck.Cards.Pop(),
                 Deck.Cards.Pop()
             };
+            FloppedCards.AddRange(Flop);
         }
 
         private static void DealOneCard() {
@@ -110,7 +130,8 @@ namespace PokerClassLibrary
 
             if (Game.Players.Count == 2)
             {
-                StartNewRound();
+                Thread t0 = new Thread(StartNewRound);
+                t0.Start();
             }
         }
 

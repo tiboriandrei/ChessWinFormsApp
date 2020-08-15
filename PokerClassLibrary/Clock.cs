@@ -31,22 +31,16 @@ namespace PokerClassLibrary
             MaxTime = GetTimeLeft().TotalSeconds;
             Stopped = true;
         }
-
+              
         public static TimeSpan GetTimeLeft()
         {
-            if (MaxTime <= 0)
-            {
-                PlayerActionEventArgs args = new PlayerActionEventArgs { Action = PlayerAction.Fold };
-                PokerEventsMediator.OnPlayerAction(null, args);
-            }
-
             if (Stopped)
             {
                 return TimeSpan.FromSeconds(MaxTime);
             }
             else
             {
-                TimeSpan timePassed = DateTime.Now - StartTime;
+                TimeSpan timePassed = DateTime.Now - StartTime;                
                 return TimeSpan.FromSeconds(MaxTime - timePassed.TotalSeconds);
             }
         }

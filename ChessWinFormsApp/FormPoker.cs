@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,7 @@ namespace ChessWinFormsApp
         private Bitmap chips = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\chips.png");
 
         private readonly Dictionary<Tuple<int, CardColor>, Bitmap> CardBitmaps = new Dictionary<Tuple<int, CardColor>, Bitmap>();
+        Thread t1;
 
         public FormPoker()
         {
@@ -27,8 +29,10 @@ namespace ChessWinFormsApp
             PokerEventsMediator.UpdateGraphics += Update;
             PokerEventsMediator.StartBet += UpdateStartBet;
 
+            t1 = new Thread(RefreshClock);
+
             Dealer.InitDealer();
-            Clock.InitClock(15);
+            Clock.InitClock(10);
             Draw();
         }
 
@@ -45,7 +49,8 @@ namespace ChessWinFormsApp
         };
 
         private void UpdateStartBet(object sender, EventArgs e) { 
-        
+               //draw only current player cards
+               //update track bar, min = lastBet, max = player chips
         }
 
         private void Update(object sender, EventArgs e) {           
@@ -58,7 +63,7 @@ namespace ChessWinFormsApp
                 DrawChips(bitmap, ChipsCoords[index].Item1, ChipsCoords[index].Item2);
                 index++;
             }
-            
+            t1.Start();            
         }
 
         private void Draw() {            
@@ -129,6 +134,11 @@ namespace ChessWinFormsApp
                 AddSize = 0;
             }
             Draw();
+        }
+
+        private void FormPoker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            t1?.Abort();
         }
 
         private void buttonAddPlayer_Click(object sender, EventArgs e)
@@ -209,6 +219,24 @@ namespace ChessWinFormsApp
             CardBitmaps.Add(Tuple.Create(13, CardColor.RedHeart), new Bitmap(path + "KH.png"));
             CardBitmaps.Add(Tuple.Create(13, CardColor.Clover), new Bitmap(path + "KC.png"));
             CardBitmaps.Add(Tuple.Create(13, CardColor.Diamond), new Bitmap(path + "KD.png"));
+        }
+
+        private void RefreshClock()
+        {
+            while (true)
+            {
+                MethodInvoker mi = delegate () {
+                    double timeleft = Clock.GetTimeLeft().TotalSeconds;
+                    if (timeleft <= 0)
+                    {
+                        Clock.StopClock();
+                        PlayerActionEventArgs args = new PlayerActionEventArgs { Action = PlayerAction.Fold };
+                        PokerEventsMediator.OnPlayerAction(null, args);
+                    }
+                    label1.Text = Clock.GetTimeLeft().ToString(@"hh\:mm\:ss");      // hh\:mm\:ss\:fff                    
+                };
+                this.Invoke(mi);
+            }
         }
 
     }
