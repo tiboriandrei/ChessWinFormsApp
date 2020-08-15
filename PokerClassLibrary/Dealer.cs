@@ -14,7 +14,7 @@ namespace PokerClassLibrary
         public static void InitDealer() {
             Deck = Deck.GetInstance;
             PokerEventsMediator.AddPlayer += AddPlayer;
-            PokerEventsMediator.PlayerAction += HandlePlayerAction;
+            PokerEventsMediator.PlayerAction += HandlePlayerAction; 
         }
 
         private static Thread t1;
@@ -29,7 +29,7 @@ namespace PokerClassLibrary
 
             foreach (var player in Round.Players) { DealHand(player); }
             PokerEventsMediator.OnUpdateGraphics(null, EventArgs.Empty);
-
+                        
             t1 = new Thread(StartBets);
             t1.Start();
 
@@ -127,14 +127,13 @@ namespace PokerClassLibrary
 
         public static void AddPlayer(object sender, PlayerDataEventArgs e) {
             Game.Players.Add(new Player(e.Name, e.Chips));
-
-            if (Game.Players.Count == 2)
-            {
-                Thread t0 = new Thread(StartNewRound);
-                t0.Start();
-            }
         }
 
+
+        public static void StartGame() {
+            Thread t0 = new Thread(StartNewRound);
+            t0.Start();
+        }
         private static void MoveChips() { 
             
         }

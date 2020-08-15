@@ -29,6 +29,8 @@ namespace ChessWinFormsApp
             PokerEventsMediator.UpdateGraphics += Update;
             PokerEventsMediator.StartBet += UpdateStartBet;
 
+            TrackBar.CheckForIllegalCrossThreadCalls = false;  //temp
+
             t1 = new Thread(RefreshClock);
 
             Dealer.InitDealer();
@@ -48,9 +50,12 @@ namespace ChessWinFormsApp
             Tuple.Create(580, 200)
         };
 
-        private void UpdateStartBet(object sender, EventArgs e) { 
-               //draw only current player cards
-               //update track bar, min = lastBet, max = player chips
+        private void UpdateStartBet(object sender, PlayerDataEventArgs e) {
+            //draw only current player cards
+            string text = e.Chips.ToString();
+            int max = e.Chips;
+            trackBar1.Maximum = max;
+            labelMax.Text = text;
         }
 
         private void Update(object sender, EventArgs e) {           
@@ -81,11 +86,7 @@ namespace ChessWinFormsApp
             {
                 Bitmap ch = chips;
                 Bitmap chresized = new Bitmap(ch, new Size(100, 100));
-                graphics.DrawImage(chresized, new Point(drawX, drawY));                
-
-                pictureBox1.Image = bitmap;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                AddSize = 0;
+                graphics.DrawImage(chresized, new Point(drawX, drawY));
             }
             Draw();
         }
@@ -128,10 +129,6 @@ namespace ChessWinFormsApp
                 Bitmap card2 = CardBitmaps[Tuple.Create(HandToDraw.Item2.Type.Item1, HandToDraw.Item2.Type.Item2)];
                 Bitmap c2resized = new Bitmap(card2, new Size(180, 180));
                 graphics.DrawImage(c2resized, new Point(drawX + 50, drawY));
-
-                pictureBox1.Image = bitmap;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                AddSize = 0;
             }
             Draw();
         }
@@ -139,6 +136,27 @@ namespace ChessWinFormsApp
         private void FormPoker_FormClosed(object sender, FormClosedEventArgs e)
         {
             t1?.Abort();
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            Dealer.StartGame();
+            buttonStart.Enabled = false;
+        }
+
+        private void buttonPause_Click(object sender, EventArgs e)
+        {
+            if (!Clock.Stopped)
+            {
+                Clock.StopClock();
+                buttonPause.Text = "Resume";
+            }
+            else if (Clock.Stopped)
+            {
+                Clock.ResumeClock();
+                buttonPause.Text = "Pause";
+            }
+            
         }
 
         private void buttonAddPlayer_Click(object sender, EventArgs e)

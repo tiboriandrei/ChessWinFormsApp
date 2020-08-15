@@ -61,16 +61,7 @@ namespace PokerClassLibrary
         {
             PlayerAction?.Invoke(sender, e);
         }
-           
-        // ----------------------------------------------------------------
-
-        public static event EventHandler TimesUp;
-        public static void OnTimesUp(object sender, EventArgs e)
-        {
-            TimesUp?.Invoke(null, e);
-        }
-
-
+        
         // ----------------------------------------------------------------
 
         public static event EventHandler Flop;

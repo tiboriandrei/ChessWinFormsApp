@@ -10,7 +10,7 @@ namespace PokerClassLibrary
 
         private static DateTime StartTime;
 
-        private static bool Stopped = true;
+        public static bool Stopped = true;
 
         public static void InitClock(int _duration)
         {
