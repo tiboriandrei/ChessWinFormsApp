@@ -12,10 +12,11 @@ namespace PokerClassLibrary
         Clover
     }
 
-    public enum PlayerAction { 
+    public enum PlayerAction {
+        Wait,
         Check, 
         Bet, 
-        Fold
+        Fold       
     }
 
     

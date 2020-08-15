@@ -73,6 +73,7 @@
             this.buttonBet.TabIndex = 2;
             this.buttonBet.Text = "BET";
             this.buttonBet.UseVisualStyleBackColor = true;
+            this.buttonBet.Click += new System.EventHandler(this.buttonBet_Click);
             // 
             // buttonCheck
             // 
@@ -83,6 +84,7 @@
             this.buttonCheck.TabIndex = 3;
             this.buttonCheck.Text = "CHECK";
             this.buttonCheck.UseVisualStyleBackColor = true;
+            this.buttonCheck.Click += new System.EventHandler(this.buttonCheck_Click);
             // 
             // buttonFold
             // 
@@ -93,6 +95,7 @@
             this.buttonFold.TabIndex = 4;
             this.buttonFold.Text = "FOLD";
             this.buttonFold.UseVisualStyleBackColor = true;
+            this.buttonFold.Click += new System.EventHandler(this.buttonFold_Click);
             // 
             // trackBar1
             // 

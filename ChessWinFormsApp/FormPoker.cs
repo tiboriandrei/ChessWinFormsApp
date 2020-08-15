@@ -16,40 +16,46 @@ namespace ChessWinFormsApp
     public partial class FormPoker : Form
     {
         private Bitmap bitmap = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\pokertable.png");
+        private Bitmap chips = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\chips.png");
 
-        private Dictionary<Tuple<int, CardColor>, Bitmap> CardBitmaps = new Dictionary<Tuple<int, CardColor>, Bitmap>();
+        private readonly Dictionary<Tuple<int, CardColor>, Bitmap> CardBitmaps = new Dictionary<Tuple<int, CardColor>, Bitmap>();
 
         public FormPoker()
         {
             InitializeComponent();
             LoadImages();
             PokerEventsMediator.UpdateGraphics += Update;
-            PokerEventsMediator.SendData += GetData;
+            PokerEventsMediator.StartBet += UpdateStartBet;
 
             Dealer.InitDealer();
+            Clock.InitClock(15);
             Draw();
         }
 
         private Tuple<Card, Card> HandToDraw;
-
-        private void GetData(object sender, PlayerDataEventArgs e)
-        {
-            HandToDraw = e.Hand;
-        }
-
-        Tuple<int, int>[] Coords = {
+             
+        Tuple<int, int>[] DrawCoords = {
             Tuple.Create(150, 80),
             Tuple.Create(580, 50)
         };
 
-        private void Update(object sender, EventArgs e) {
-            //PokerEventsMediator.OnRequestHandData(this, EventArgs.Empty);
+        Tuple<int, int>[] ChipsCoords = {
+            Tuple.Create(150, 230),
+            Tuple.Create(580, 200)
+        };
+
+        private void UpdateStartBet(object sender, EventArgs e) { 
+        
+        }
+
+        private void Update(object sender, EventArgs e) {           
 
             int index = 0;
             foreach (var player in Round.Players)
             {
                 HandToDraw = player.Hand;
-                DrawHand(bitmap, Coords[index].Item1, Coords[index].Item2);
+                DrawHand(bitmap, DrawCoords[index].Item1, DrawCoords[index].Item2);
+                DrawChips(bitmap, ChipsCoords[index].Item1, ChipsCoords[index].Item2);
                 index++;
             }
             
@@ -63,6 +69,49 @@ namespace ChessWinFormsApp
         int MouseAtX, MouseAtY, AddSize = 0;
 
         int TileWidth, TileHeight = 60;
+
+        private void DrawChips(Bitmap bitmap, int drawX, int drawY)
+        {
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                Bitmap ch = chips;
+                Bitmap chresized = new Bitmap(ch, new Size(100, 100));
+                graphics.DrawImage(chresized, new Point(drawX, drawY));                
+
+                pictureBox1.Image = bitmap;
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                AddSize = 0;
+            }
+            Draw();
+        }
+
+        private void buttonBet_Click(object sender, EventArgs e)
+        {
+            PlayerActionEventArgs args = new PlayerActionEventArgs {
+                BetAmount = trackBar1.Value,
+                Action = PlayerAction.Bet
+            };
+            PokerEventsMediator.OnPlayerAction(null, args);
+        }
+
+        private void buttonCheck_Click(object sender, EventArgs e)
+        {
+            PlayerActionEventArgs args = new PlayerActionEventArgs
+            {
+                Action = PlayerAction.Check
+            };
+            PokerEventsMediator.OnPlayerAction(null, args);
+        }
+
+        private void buttonFold_Click(object sender, EventArgs e)
+        {
+            PlayerActionEventArgs args = new PlayerActionEventArgs
+            {
+                Action = PlayerAction.Fold
+            };
+            PokerEventsMediator.OnPlayerAction(null, args);
+        }
+
         private void DrawHand(Bitmap bitmap, int drawX, int drawY)
         {
             using (Graphics graphics = Graphics.FromImage(bitmap))
@@ -71,7 +120,7 @@ namespace ChessWinFormsApp
                 Bitmap c1resized = new Bitmap(card1, new Size(180, 180));
                 graphics.DrawImage(c1resized, new Point(drawX, drawY));
 
-                Bitmap card2 = CardBitmaps[Tuple.Create(HandToDraw.Item1.Type.Item1, HandToDraw.Item1.Type.Item2)];
+                Bitmap card2 = CardBitmaps[Tuple.Create(HandToDraw.Item2.Type.Item1, HandToDraw.Item2.Type.Item2)];
                 Bitmap c2resized = new Bitmap(card2, new Size(180, 180));
                 graphics.DrawImage(c2resized, new Point(drawX + 50, drawY));
 
@@ -81,7 +130,6 @@ namespace ChessWinFormsApp
             }
             Draw();
         }
-
 
         private void buttonAddPlayer_Click(object sender, EventArgs e)
         {
