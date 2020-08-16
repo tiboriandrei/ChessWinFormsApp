@@ -39,6 +39,10 @@
             this.textBoxPlayerName = new System.Windows.Forms.TextBox();
             this.textBoxChips = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.buttonPause = new System.Windows.Forms.Button();
+            this.labelPlayer1 = new System.Windows.Forms.Label();
+            this.labelPlayer2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -152,11 +156,57 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Time";
             // 
+            // buttonStart
+            // 
+            this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonStart.Location = new System.Drawing.Point(697, 38);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(125, 51);
+            this.buttonStart.TabIndex = 11;
+            this.buttonStart.Text = "Start";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // buttonPause
+            // 
+            this.buttonPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPause.Location = new System.Drawing.Point(697, 95);
+            this.buttonPause.Name = "buttonPause";
+            this.buttonPause.Size = new System.Drawing.Size(125, 51);
+            this.buttonPause.TabIndex = 12;
+            this.buttonPause.Text = "Pause";
+            this.buttonPause.UseVisualStyleBackColor = true;
+            this.buttonPause.Click += new System.EventHandler(this.buttonPause_Click);
+            // 
+            // labelPlayer1
+            // 
+            this.labelPlayer1.AutoSize = true;
+            this.labelPlayer1.Location = new System.Drawing.Point(212, 176);
+            this.labelPlayer1.Name = "labelPlayer1";
+            this.labelPlayer1.Size = new System.Drawing.Size(55, 13);
+            this.labelPlayer1.TabIndex = 13;
+            this.labelPlayer1.Text = "PLAYER1";
+            // 
+            // labelPlayer2
+            // 
+            this.labelPlayer2.AutoSize = true;
+            this.labelPlayer2.Location = new System.Drawing.Point(396, 158);
+            this.labelPlayer2.Name = "labelPlayer2";
+            this.labelPlayer2.Size = new System.Drawing.Size(55, 13);
+            this.labelPlayer2.TabIndex = 14;
+            this.labelPlayer2.Text = "PLAYER2";
+            // 
             // FormPoker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 571);
+            this.Controls.Add(this.labelPlayer2);
+            this.Controls.Add(this.labelPlayer1);
+            this.Controls.Add(this.buttonPause);
+            this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxChips);
             this.Controls.Add(this.textBoxPlayerName);
@@ -191,5 +241,9 @@
         private System.Windows.Forms.TextBox textBoxPlayerName;
         private System.Windows.Forms.TextBox textBoxChips;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Button buttonPause;
+        private System.Windows.Forms.Label labelPlayer1;
+        private System.Windows.Forms.Label labelPlayer2;
     }
 }

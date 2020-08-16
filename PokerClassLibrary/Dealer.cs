@@ -54,8 +54,7 @@ namespace PokerClassLibrary
             PokerEventsMediator.OnFlop(null, flopArgs);
 
             t1 = new Thread(StartBets);
-            t1.Start();
-            Clock.InitClock(15);
+            t1.Start();            
         }
 
         private static PlayerAction action;
@@ -82,9 +81,7 @@ namespace PokerClassLibrary
                 }
 
                 switch (action)
-                {
-                    case PlayerAction.Wait:
-                        break;
+                {                   
                     case PlayerAction.Check:
                         break;
                     case PlayerAction.Bet:
@@ -102,8 +99,7 @@ namespace PokerClassLibrary
 
         private static void HandlePlayerAction(object sender, PlayerActionEventArgs e) {
             action = e.Action;
-            PlayerBet = e.BetAmount;
-            Clock.InitClock(10);
+            PlayerBet = e.BetAmount;            
         }
 
         private static void DealHand(Player player) {            

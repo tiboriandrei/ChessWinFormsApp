@@ -31,13 +31,13 @@ namespace ChessWinFormsApp
         public Form1()
         {
             InitializeComponent();
-
             GameState.InitGameState();
             Referee.InitReferee();
             EventsMediator.Winner += GameOver;
 
             //currentGame = GameModeFactory.InitializeGame(GameModeOption.Blitz);                       
             //string fullyQualifiedName = currentGame.GetType().AssemblyQualifiedName;
+
             availableMoves = new List<Move>();
 
             t1 = new Thread(RefreshClock);

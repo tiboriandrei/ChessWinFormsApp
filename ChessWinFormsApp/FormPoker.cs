@@ -36,7 +36,7 @@ namespace ChessWinFormsApp
             t1 = new Thread(RefreshClock);
 
             Dealer.InitDealer();
-            Clock.InitClock(10);
+            Clock.InitClock(15);
             Draw(bitmap);
         }
 
@@ -52,28 +52,33 @@ namespace ChessWinFormsApp
             Tuple.Create(580, 200)
         };
 
-        private void UpdateStartBet(object sender, PlayerDataEventArgs e) {
-            //draw only current player cards
-            string text = e.Chips.ToString();
-            int max = e.Chips;
-            trackBar1.Maximum = max;
-            labelMax.Text = text;
+        private void UpdateStartBet(object sender, PlayerDataEventArgs e) { 
+            trackBar1.Maximum = e.Chips;
+            labelMax.Text = e.Chips.ToString();
         }
 
-        private void Update(object sender, EventArgs e) {           
-
+        private void Update(object sender, EventArgs e) {  
             int index = 0;
             foreach (var player in Round.Players)
             {
                 HandToDraw = player.Hand;
                 DrawHand(DrawCoords[index].Item1, DrawCoords[index].Item2);
                 DrawChips(ChipsCoords[index].Item1, ChipsCoords[index].Item2);
+
+                switch (index)
+                {
+                    case 0:
+                        labelPlayer1.Text = player.Chips.ToString();
+                        break;
+                    case 1:
+                        labelPlayer2.Text = player.Chips.ToString();
+                        break;
+                }
                 index++;
             }
             t1.Start();            
         }
 
-        public static object _locker = new object();
         private void Draw(Bitmap bm) {            
             bitmap = bm;
             

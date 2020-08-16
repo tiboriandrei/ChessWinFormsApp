@@ -26,3 +26,4 @@ E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\System.Security.
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.FormPoker.resources
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\PokerClassLibrary.dll
 E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\bin\Debug\PokerClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\ChessWinFormsApp\obj\Debug\ChessWinFormsApp.FormMenu.resources
