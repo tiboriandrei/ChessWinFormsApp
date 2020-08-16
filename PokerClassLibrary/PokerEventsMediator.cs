@@ -64,12 +64,19 @@ namespace PokerClassLibrary
         
         // ----------------------------------------------------------------
 
-        public static event EventHandler Flop;
-        public static void OnFlop(object sender, EventArgs e)
+        public static event EventHandler<FlopEventArgs> Flop;
+        public static void OnFlop(object sender, FlopEventArgs e)
         {
             Flop?.Invoke(null, e);
         }
 
+        // ----------------------------------------------------------------
+
+        public static event EventHandler BetsStageEnded;
+        public static void OnBetsStageEnded(object sender, EventArgs e)
+        {
+            BetsStageEnded?.Invoke(null, e);
+        }
 
     }
 }

@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChessWinFormsApp
-{
+{   
     public partial class FormPoker : Form
     {
         private Bitmap bitmap = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\pokertable.png");
+        private Bitmap lastBitmap;
         private Bitmap chips = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\chips.png");
 
         private readonly Dictionary<Tuple<int, CardColor>, Bitmap> CardBitmaps = new Dictionary<Tuple<int, CardColor>, Bitmap>();
@@ -28,6 +29,7 @@ namespace ChessWinFormsApp
             LoadImages();
             PokerEventsMediator.UpdateGraphics += Update;
             PokerEventsMediator.StartBet += UpdateStartBet;
+            PokerEventsMediator.Flop += DrawFlop;
 
             TrackBar.CheckForIllegalCrossThreadCalls = false;  //temp
 
@@ -35,7 +37,7 @@ namespace ChessWinFormsApp
 
             Dealer.InitDealer();
             Clock.InitClock(10);
-            Draw();
+            Draw(bitmap);
         }
 
         private Tuple<Card, Card> HandToDraw;
@@ -64,31 +66,69 @@ namespace ChessWinFormsApp
             foreach (var player in Round.Players)
             {
                 HandToDraw = player.Hand;
-                DrawHand(bitmap, DrawCoords[index].Item1, DrawCoords[index].Item2);
-                DrawChips(bitmap, ChipsCoords[index].Item1, ChipsCoords[index].Item2);
+                DrawHand(DrawCoords[index].Item1, DrawCoords[index].Item2);
+                DrawChips(ChipsCoords[index].Item1, ChipsCoords[index].Item2);
                 index++;
             }
             t1.Start();            
         }
 
-        private void Draw() {            
-            pictureBox1.Image = bitmap;
+        public static object _locker = new object();
+        private void Draw(Bitmap bm) {            
+            bitmap = bm;
+            
+            pictureBox1.Image = bm;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         int MouseAtX, MouseAtY, AddSize = 0;
 
-        int TileWidth, TileHeight = 60;
+        int TileWidth, TileHeight = 60, space;
 
-        private void DrawChips(Bitmap bitmap, int drawX, int drawY)
+        private void DrawFlop(object sender, FlopEventArgs e)
         {
-            using (Graphics graphics = Graphics.FromImage(bitmap))
+            Thread.Sleep(1000);
+            Bitmap bmcopy = (Bitmap)bitmap.Clone();
+            space = 0;
+            using (Graphics graphics = Graphics.FromImage(bmcopy))
+            {
+                foreach (var card in e.FloppedCards)
+                {
+                    Bitmap c = CardBitmaps[Tuple.Create(card.Type.Item1, card.Type.Item2)];
+                    Bitmap cresized = new Bitmap(c, new Size(150, 150));
+                    graphics.DrawImage(cresized, new Point(300 + space, 400));
+                    space += 170;
+                }                
+            }
+            Draw(bmcopy);
+        }
+
+        private void DrawChips(int drawX, int drawY)
+        {
+            Bitmap bmcopy = (Bitmap)bitmap.Clone();
+            using (Graphics graphics = Graphics.FromImage(bmcopy))
             {
                 Bitmap ch = chips;
                 Bitmap chresized = new Bitmap(ch, new Size(100, 100));
                 graphics.DrawImage(chresized, new Point(drawX, drawY));
             }
-            Draw();
+            Draw(bmcopy);
+        }
+
+        private void DrawHand(int drawX, int drawY)
+        {
+            Bitmap bmcopy = (Bitmap)bitmap.Clone();
+            using (Graphics graphics = Graphics.FromImage(bmcopy))
+            {
+                Bitmap card1 = CardBitmaps[Tuple.Create(HandToDraw.Item1.Type.Item1, HandToDraw.Item1.Type.Item2)];
+                Bitmap c1resized = new Bitmap(card1, new Size(180, 180));
+                graphics.DrawImage(c1resized, new Point(drawX, drawY));
+
+                Bitmap card2 = CardBitmaps[Tuple.Create(HandToDraw.Item2.Type.Item1, HandToDraw.Item2.Type.Item2)];
+                Bitmap c2resized = new Bitmap(card2, new Size(180, 180));
+                graphics.DrawImage(c2resized, new Point(drawX + 50, drawY));
+            }
+            Draw(bmcopy);
         }
 
         private void buttonBet_Click(object sender, EventArgs e)
@@ -117,22 +157,7 @@ namespace ChessWinFormsApp
             };
             PokerEventsMediator.OnPlayerAction(null, args);
         }
-
-        private void DrawHand(Bitmap bitmap, int drawX, int drawY)
-        {
-            using (Graphics graphics = Graphics.FromImage(bitmap))
-            {
-                Bitmap card1 = CardBitmaps[Tuple.Create(HandToDraw.Item1.Type.Item1, HandToDraw.Item1.Type.Item2)];
-                Bitmap c1resized = new Bitmap(card1, new Size(180, 180));
-                graphics.DrawImage(c1resized, new Point(drawX, drawY));
-
-                Bitmap card2 = CardBitmaps[Tuple.Create(HandToDraw.Item2.Type.Item1, HandToDraw.Item2.Type.Item2)];
-                Bitmap c2resized = new Bitmap(card2, new Size(180, 180));
-                graphics.DrawImage(c2resized, new Point(drawX + 50, drawY));
-            }
-            Draw();
-        }
-
+               
         private void FormPoker_FormClosed(object sender, FormClosedEventArgs e)
         {
             t1?.Abort();
@@ -249,7 +274,7 @@ namespace ChessWinFormsApp
                     {
                         Clock.StopClock();
                         PlayerActionEventArgs args = new PlayerActionEventArgs { Action = PlayerAction.Fold };
-                        PokerEventsMediator.OnPlayerAction(null, args);
+                        PokerEventsMediator.OnPlayerAction(null, args);                       
                     }
                     label1.Text = Clock.GetTimeLeft().ToString(@"hh\:mm\:ss");      // hh\:mm\:ss\:fff                    
                 };

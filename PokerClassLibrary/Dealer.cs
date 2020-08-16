@@ -11,13 +11,14 @@ namespace PokerClassLibrary
         private static List<Card> FloppedCards { get; set; } = new List<Card>();
         private static List<Card> CutCards { get; set; } = new List<Card>();
 
+        private static Thread t1;
+
         public static void InitDealer() {
             Deck = Deck.GetInstance;
             PokerEventsMediator.AddPlayer += AddPlayer;
-            PokerEventsMediator.PlayerAction += HandlePlayerAction; 
-        }
-
-        private static Thread t1;
+            PokerEventsMediator.PlayerAction += HandlePlayerAction;
+            PokerEventsMediator.BetsStageEnded += Deal;
+        }        
 
         private static void StartNewRound() {
             foreach (var card in CutCards) { Deck.Cards.Push(card); }
@@ -31,31 +32,30 @@ namespace PokerClassLibrary
             PokerEventsMediator.OnUpdateGraphics(null, EventArgs.Empty);
                         
             t1 = new Thread(StartBets);
-            t1.Start();
+            t1.Start();           
 
-            while (t1.IsAlive) {
-                Thread.Sleep(10);
+        }
+
+        private static int stage = 0;
+        private static void Deal(object sender, EventArgs e) {
+            switch (stage)
+            {
+                case 0: DealFlop();
+                    break;
+                case 1:
+                    DealOneCard();
+                    break;
+                case 2:
+                    DealOneCard();
+                    break;
             }
-
-            DealFlop();
 
             FlopEventArgs flopArgs = new FlopEventArgs { FloppedCards = FloppedCards };
             PokerEventsMediator.OnFlop(null, flopArgs);
 
             t1 = new Thread(StartBets);
             t1.Start();
-
-            // wait for bids
-
-            // DealOneCard();
-
-            // wait for bids
-
-            // DealOneCard();
-
-            // wait for bids
-
-            //Round round = new Round(Game.Players, new List<Card>());
+            Clock.InitClock(15);
         }
 
         private static PlayerAction action;
@@ -65,6 +65,9 @@ namespace PokerClassLibrary
 
             for (int i = 0; i < Round.Players.Count; i++)
             {
+                Clock.InitClock(15);
+                Clock.ResumeClock();
+
                 action = PlayerAction.Wait;
                 PlayerDataEventArgs args = new PlayerDataEventArgs
                 {
@@ -72,9 +75,7 @@ namespace PokerClassLibrary
                     PlaceAtTable = placeAtTable++
                 };
                 PokerEventsMediator.OnStartBet(null, args);
-
-                Clock.ResumeClock();
-
+                   
                 while (action == PlayerAction.Wait)
                 {
                     Thread.Sleep(10);
@@ -93,8 +94,10 @@ namespace PokerClassLibrary
                         Round.Players.RemoveAt(i--);
                         break;
                 }
-            }             
-            t1.Abort();
+            }  
+            
+            PokerEventsMediator.OnBetsStageEnded(null, EventArgs.Empty);
+            stage++;            
         }
 
         private static void HandlePlayerAction(object sender, PlayerActionEventArgs e) {
@@ -122,7 +125,7 @@ namespace PokerClassLibrary
 
         private static void DealOneCard() {
             CutCards.Add(Deck.Cards.Pop());
-            Card TurnRiver = Deck.Cards.Pop();
+            FloppedCards.Add(Deck.Cards.Pop());
         }
 
         public static void AddPlayer(object sender, PlayerDataEventArgs e) {
