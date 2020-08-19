@@ -11,6 +11,7 @@ namespace ChessClassLibrary.Clocks
             _WhitesTimer = new Clock(duration);
             _BlacksTimer = new Clock(duration);
             EventsMediator.PlayerMoved += ChangeTimer;
+            EventsMediator.Winner += Stop;
         }
 
         public Clock _WhitesTimer { get; set; }
@@ -32,6 +33,11 @@ namespace ChessClassLibrary.Clocks
                 default:
                     break;
             }
+        }
+
+        private void Stop(object sender, PlayerEventArgs e) {
+            _WhitesTimer.StopClock();
+            _BlacksTimer.StopClock();
         }
 
     }

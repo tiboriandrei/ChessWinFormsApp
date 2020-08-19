@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace ChessClassLibrary
 {
@@ -11,8 +12,9 @@ namespace ChessClassLibrary
     {
         private static Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
-        public static void InitGameState() {
-                        
+        public static void InitGameState() {            
+            Layout.Clear();
+
             Dictionary<int, ChessPiece> BlackPieces = new Dictionary<int, ChessPiece>
             {
                 { 7, PieceFactory.GeneratePiece(PieceType.Rook, PieceColor.Black) },

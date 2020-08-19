@@ -9,7 +9,8 @@ namespace ChessClassLibrary
     {
         public static Game InitializeGame(GameModeOption gameMode)
         {  
-            Game game = null;
+            Game game = null;            
+
             switch (gameMode.ToString())
             {
                 case "Normal": game = new NormalChess((int)gameMode); break;

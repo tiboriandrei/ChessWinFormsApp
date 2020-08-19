@@ -1,9 +1,9 @@
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\bin\Debug\netstandard2.0\PokerClassLibrary.deps.json
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\bin\Debug\netstandard2.0\PokerClassLibrary.dll
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\bin\Debug\netstandard2.0\PokerClassLibrary.pdb
-E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.csprojAssemblyReference.cache
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.AssemblyInfoInputs.cache
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.AssemblyInfo.cs
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.csproj.CoreCompileInputs.cache
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.dll
 E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\PokerClassLibrary\obj\Debug\netstandard2.0\PokerClassLibrary.csprojAssemblyReference.cache

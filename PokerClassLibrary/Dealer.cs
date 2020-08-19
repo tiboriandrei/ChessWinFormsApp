@@ -12,6 +12,7 @@ namespace PokerClassLibrary
         private static List<Card> CutCards { get; set; } = new List<Card>();
 
         private static Thread t1;
+        private static int LastBet { get; set; }
 
         public static void InitDealer() {
             Deck = Deck.GetInstance;
@@ -29,11 +30,12 @@ namespace PokerClassLibrary
             Round.NewRound();
 
             foreach (var player in Round.Players) { DealHand(player); }
-            PokerEventsMediator.OnUpdateGraphics(null, EventArgs.Empty);
+
+            PlayerActionEventArgs args = new PlayerActionEventArgs { };
+            PokerEventsMediator.OnUpdateGraphics(null, args);
                         
             t1 = new Thread(StartBets);
-            t1.Start();           
-
+            t1.Start();
         }
 
         private static int stage = 0;
@@ -53,8 +55,13 @@ namespace PokerClassLibrary
             FlopEventArgs flopArgs = new FlopEventArgs { FloppedCards = FloppedCards };
             PokerEventsMediator.OnFlop(null, flopArgs);
 
-            t1 = new Thread(StartBets);
-            t1.Start();            
+            if (stage < 2)
+            {
+                t1 = new Thread(StartBets);
+                t1.Start();               
+            }
+
+            Clock.InitClock(15);
         }
 
         private static PlayerAction action;
@@ -64,8 +71,7 @@ namespace PokerClassLibrary
 
             for (int i = 0; i < Round.Players.Count; i++)
             {
-                Clock.InitClock(15);
-                Clock.ResumeClock();
+                Clock.InitClock(15);                
 
                 action = PlayerAction.Wait;
                 PlayerDataEventArgs args = new PlayerDataEventArgs

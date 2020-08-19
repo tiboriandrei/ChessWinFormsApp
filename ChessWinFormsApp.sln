@@ -25,7 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{62D21B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameRepository.Factory", "GameFactory\GameRepository.Factory.csproj", "{61354514-DD0B-4CBC-8E2E-7715629EBB56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerClassLibrary", "PokerClassLibrary\PokerClassLibrary.csproj", "{4527D78A-948F-4E59-BFE0-3233CF739ECF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokerClassLibrary", "PokerClassLibrary\PokerClassLibrary.csproj", "{4527D78A-948F-4E59-BFE0-3233CF739ECF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{13D46E23-0EA7-4EBA-8982-A220304C310F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{6F376B2C-0D55-4BC2-8620-3A233EC83D0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,9 +53,16 @@ Global
 		{4527D78A-948F-4E59-BFE0-3233CF739ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4527D78A-948F-4E59-BFE0-3233CF739ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4527D78A-948F-4E59-BFE0-3233CF739ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F376B2C-0D55-4BC2-8620-3A233EC83D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F376B2C-0D55-4BC2-8620-3A233EC83D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F376B2C-0D55-4BC2-8620-3A233EC83D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F376B2C-0D55-4BC2-8620-3A233EC83D0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F376B2C-0D55-4BC2-8620-3A233EC83D0A} = {13D46E23-0EA7-4EBA-8982-A220304C310F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03D6A702-5C4F-40A0-9425-23DB334E88C8}

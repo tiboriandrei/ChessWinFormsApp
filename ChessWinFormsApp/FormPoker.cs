@@ -35,8 +35,7 @@ namespace ChessWinFormsApp
 
             t1 = new Thread(RefreshClock);
 
-            Dealer.InitDealer();
-            Clock.InitClock(15);
+            Dealer.InitDealer();            
             Draw(bitmap);
         }
 
@@ -58,7 +57,7 @@ namespace ChessWinFormsApp
         }
 
         private void Update(object sender, EventArgs e) {  
-            int index = 0;
+            int index = 0;            
             foreach (var player in Round.Players)
             {
                 HandToDraw = player.Hand;
@@ -76,7 +75,7 @@ namespace ChessWinFormsApp
                 }
                 index++;
             }
-            t1.Start();            
+            t1.Start();
         }
 
         private void Draw(Bitmap bm) {            
@@ -92,7 +91,7 @@ namespace ChessWinFormsApp
 
         private void DrawFlop(object sender, FlopEventArgs e)
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             Bitmap bmcopy = (Bitmap)bitmap.Clone();
             space = 0;
             using (Graphics graphics = Graphics.FromImage(bmcopy))
@@ -110,6 +109,7 @@ namespace ChessWinFormsApp
 
         private void DrawChips(int drawX, int drawY)
         {
+            Thread.Sleep(500);
             Bitmap bmcopy = (Bitmap)bitmap.Clone();
             using (Graphics graphics = Graphics.FromImage(bmcopy))
             {
@@ -122,6 +122,7 @@ namespace ChessWinFormsApp
 
         private void DrawHand(int drawX, int drawY)
         {
+            Thread.Sleep(500);
             Bitmap bmcopy = (Bitmap)bitmap.Clone();
             using (Graphics graphics = Graphics.FromImage(bmcopy))
             {
@@ -138,10 +139,11 @@ namespace ChessWinFormsApp
 
         private void buttonBet_Click(object sender, EventArgs e)
         {
+            labelPot.Text = (Int32.Parse(labelPot.Text.ToString()) + trackBar1.Value).ToString();
             PlayerActionEventArgs args = new PlayerActionEventArgs {
                 BetAmount = trackBar1.Value,
                 Action = PlayerAction.Bet
-            };
+            };            
             PokerEventsMediator.OnPlayerAction(null, args);
         }
 

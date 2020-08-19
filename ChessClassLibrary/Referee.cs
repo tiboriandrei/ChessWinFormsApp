@@ -38,7 +38,7 @@ namespace ChessClassLibrary
                 return AvailableMoves;
             }            
 
-            if (CheckForAnyMovesLeft(Layout) == 0)
+            if (NrOfMovesLeft(Layout) == 0)
             {
                 EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });
                 return AvailableMoves;
@@ -50,7 +50,7 @@ namespace ChessClassLibrary
             return AvailableMoves;
         }
 
-        private static int CheckForAnyMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> layout) {
+        private static int NrOfMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> layout) {
             int movesToAvoidMate = 0;
             var test = GameState.GetGameState();
             for (int i = 0; i < 8; i++)

@@ -16,7 +16,7 @@ namespace PokerClassLibrary
         }
 
         public static void IncreasePot(int amount) {
-            Pot += amount;
+            Pot += amount;            
         }        
     }
 }

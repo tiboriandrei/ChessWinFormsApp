@@ -43,6 +43,7 @@
             this.buttonPause = new System.Windows.Forms.Button();
             this.labelPlayer1 = new System.Windows.Forms.Label();
             this.labelPlayer2 = new System.Windows.Forms.Label();
+            this.labelPot = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -198,11 +199,21 @@
             this.labelPlayer2.TabIndex = 14;
             this.labelPlayer2.Text = "PLAYER2";
             // 
+            // labelPot
+            // 
+            this.labelPot.AutoSize = true;
+            this.labelPot.Location = new System.Drawing.Point(491, 190);
+            this.labelPot.Name = "labelPot";
+            this.labelPot.Size = new System.Drawing.Size(13, 13);
+            this.labelPot.TabIndex = 15;
+            this.labelPot.Text = "0";
+            // 
             // FormPoker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 571);
+            this.Controls.Add(this.labelPot);
             this.Controls.Add(this.labelPlayer2);
             this.Controls.Add(this.labelPlayer1);
             this.Controls.Add(this.buttonPause);
@@ -245,5 +256,6 @@
         private System.Windows.Forms.Button buttonPause;
         private System.Windows.Forms.Label labelPlayer1;
         private System.Windows.Forms.Label labelPlayer2;
+        private System.Windows.Forms.Label labelPot;
     }
 }

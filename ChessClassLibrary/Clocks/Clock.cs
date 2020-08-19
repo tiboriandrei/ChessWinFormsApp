@@ -47,8 +47,6 @@ namespace ChessClassLibrary.Clocks
             }            
         }
 
-        //times up event invoke to refree who invokes further...etc
-
         //in blitzmode, when player moves and the time left is low, increment +5 by event or something
 
     }

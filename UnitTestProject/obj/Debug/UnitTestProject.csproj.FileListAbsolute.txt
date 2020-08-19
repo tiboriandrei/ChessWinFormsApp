@@ -1,0 +1,16 @@
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\UnitTestProject.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\UnitTestProject.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\ChessClassLibrary.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\ChessClassLibrary.pdb
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\obj\Debug\UnitTestProject.csprojAssemblyReference.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\obj\Debug\UnitTestProject.csproj.CoreCompileInputs.cache
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\obj\Debug\UnitTestProject.csproj.CopyComplete
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\obj\Debug\UnitTestProject.dll
+E:\ChessWinFormsApp\ChessWinFormsApp\UnitTestProject\obj\Debug\UnitTestProject.pdb

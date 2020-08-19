@@ -136,7 +136,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)dll\*.*" "$(TargetDir)" /Y
+    <PostBuildEvent>xcopy "$(SolutionDir)ChessClassLibrary\bin\Debug\netstandard2.0\*.*" "$(TargetDir)" /Y
+
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

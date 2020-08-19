@@ -14,16 +14,14 @@ namespace PokerClassLibrary
 
         public static void InitClock(int _duration)
         {
-            MaxTime = _duration;
+            MaxTime = _duration;            
+            ResumeClock();
         }
 
         public static void ResumeClock()
         {
-            if (Stopped)
-            {
-                StartTime = DateTime.Now;
-                Stopped = false;
-            }
+            StartTime = DateTime.Now;
+            Stopped = false;            
         }
 
         public static void StopClock()

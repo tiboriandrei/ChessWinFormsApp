@@ -30,8 +30,7 @@ namespace ChessWinFormsApp
 
         public Form1()
         {
-            InitializeComponent();
-            GameState.InitGameState();
+            InitializeComponent();            
             Referee.InitReferee();
             EventsMediator.Winner += GameOver;
 
@@ -51,9 +50,7 @@ namespace ChessWinFormsApp
         }
 
         public void GameOver(object sender, PlayerEventArgs e) {
-            labelWinner.Text = e.pieceColor.ToString() + " lost";
-            currentGame._ChessClock._BlacksTimer.StopClock();
-            currentGame._ChessClock._WhitesTimer.StopClock();
+            labelWinner.Text = e.pieceColor.ToString() + " lost";                      
         }
 
         private void Draw() {
@@ -182,18 +179,27 @@ namespace ChessWinFormsApp
             
             Move attemptedMove = new Move(selectedPieceCoords, selectedTargetCoords);
 
-            if (HelperMaths.ContainsObjectMove(availableMoves, attemptedMove))
+            try
             {
-                GameState.UpdateLayout(attemptedMove);
-                selectedPieceCoords = Tuple.Create(-1, -1);
-                availableMoves.Clear();
-            }
-            else {
-                selectedPieceCoords = Coordinate.GetInstance.GetCoord(x, y);
-                availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
-            }
+                if (HelperMaths.ContainsObjectMove(availableMoves, attemptedMove))
+                {
+                    GameState.UpdateLayout(attemptedMove);
+                    selectedPieceCoords = Tuple.Create(-1, -1);
+                    availableMoves.Clear();
+                }
+                else
+                {
+                    selectedPieceCoords = Coordinate.GetInstance.GetCoord(x, y);
+                    availableMoves = Referee.GetAvailableMoves(selectedPieceCoords);
+                }
 
-            Draw();
+                Draw();
+            }
+            catch (Exception)
+            {
+                
+            }
+            
         }
 
         // labelMouseLocation.Text = "Mouse at x: " + (pos.X / 60) + " y: " + (7 - pos.Y / 60);      //for checkmove logic
@@ -246,19 +252,19 @@ namespace ChessWinFormsApp
 
         private void buttonUndo_Click(object sender, EventArgs e)
         {
-            EventsMediator.OnUndo(null, EventArgs.Empty);
+            EventsMediator.OnUndo(null, EventArgs.Empty);           
             Draw();
         }
 
         private void blitzToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            currentGame = GameFactory.GetGame(GameModeOption.Blitz);
+            currentGame = GameFactory.GetGame(GameModeOption.Blitz);            
             Draw();
         }
 
         private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            currentGame = GameFactory.GetGame(GameModeOption.Normal);
+            currentGame = GameFactory.GetGame(GameModeOption.Normal);            
             Draw();
         }
 

@@ -10,7 +10,8 @@ namespace ChessClassLibrary
 
         public Game(int duration)
         {            
-            _ChessClock = new ChessClock(duration);           
+            _ChessClock = new ChessClock(duration);
+            GameState.InitGameState();
         }
 
     }
