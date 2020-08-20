@@ -16,8 +16,7 @@ namespace ChessWinFormsApp
 {   
     public partial class FormPoker : Form
     {
-        private Bitmap bitmap = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\pokertable.png");
-        private Bitmap lastBitmap;
+        private Bitmap bitmap = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\pokertable.png");        
         private Bitmap chips = new Bitmap("E:\\ChessWinFormsApp\\ChessWinFormsApp\\ChessWinFormsApp\\pokerRes\\chips.png");
 
         private readonly Dictionary<Tuple<int, CardColor>, Bitmap> CardBitmaps = new Dictionary<Tuple<int, CardColor>, Bitmap>();
@@ -30,8 +29,9 @@ namespace ChessWinFormsApp
             PokerEventsMediator.UpdateGraphics += Update;
             PokerEventsMediator.StartBet += UpdateStartBet;
             PokerEventsMediator.Flop += DrawFlop;
+            PokerEventsMediator.Bet += UpdateChips;
 
-            TrackBar.CheckForIllegalCrossThreadCalls = false;  //temp
+            TrackBar.CheckForIllegalCrossThreadCalls = false;
 
             t1 = new Thread(RefreshClock);
 
@@ -52,8 +52,24 @@ namespace ChessWinFormsApp
         };
 
         private void UpdateStartBet(object sender, PlayerDataEventArgs e) { 
+            trackBar1.Minimum = e.LastBet;
             trackBar1.Maximum = e.Chips;
             labelMax.Text = e.Chips.ToString();
+            labelMin.Text = e.LastBet.ToString();
+        }
+
+        private void UpdateChips(object sender, BetEventArgs e)
+        {
+            string val = Round.Players[e.PlaceAtTable].Chips.ToString();
+                switch (e.PlaceAtTable)
+                {
+                    case 0:
+                        labelPlayer1.Text = val;
+                        break;
+                    case 1:
+                        labelPlayer2.Text = val;
+                        break;
+                }
         }
 
         private void Update(object sender, EventArgs e) {  

@@ -221,6 +221,7 @@ namespace ChessWinFormsApp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Referee.ClearReferee();
             t1?.Abort();                       
         }
 

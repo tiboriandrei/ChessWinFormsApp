@@ -11,8 +11,7 @@ namespace PokerClassLibrary
         private static List<Card> FloppedCards { get; set; } = new List<Card>();
         private static List<Card> CutCards { get; set; } = new List<Card>();
 
-        private static Thread t1;
-        private static int LastBet { get; set; }
+        private static Thread t1;        
 
         public static void InitDealer() {
             Deck = Deck.GetInstance;
@@ -55,19 +54,25 @@ namespace PokerClassLibrary
             FlopEventArgs flopArgs = new FlopEventArgs { FloppedCards = FloppedCards };
             PokerEventsMediator.OnFlop(null, flopArgs);
 
-            if (stage < 2)
-            {
+            if (stage <= 2) {
                 t1 = new Thread(StartBets);
-                t1.Start();               
+                t1.Start();
+                Clock.InitClock(15);
+            } else if (stage > 2) {
+                //show hands, calculate winner     
+                Clock.StopClock();
             }
 
-            Clock.InitClock(15);
+            
         }
 
         private static PlayerAction action;
         private static int PlayerBet = 0;
+        private static int LastBet;
+        
         public static void StartBets() {
             int placeAtTable = 0;
+            LastBet = 0;
 
             for (int i = 0; i < Round.Players.Count; i++)
             {
@@ -77,7 +82,8 @@ namespace PokerClassLibrary
                 PlayerDataEventArgs args = new PlayerDataEventArgs
                 {
                     Chips = Round.Players[i].Chips,
-                    PlaceAtTable = placeAtTable++
+                    PlaceAtTable = placeAtTable++,
+                    LastBet = LastBet
                 };
                 PokerEventsMediator.OnStartBet(null, args);
                    
@@ -91,7 +97,13 @@ namespace PokerClassLibrary
                     case PlayerAction.Check:
                         break;
                     case PlayerAction.Bet:
-                        Round.IncreasePot(PlayerBet);
+                        Round.IncreasePot(PlayerBet, i);
+                       
+                        LastBet = PlayerBet - LastBet;
+                        if (PlayerBet > LastBet)
+                        {
+                            //start new betting round where index 0 = next player
+                        }
                         break;
                     case PlayerAction.Fold:
                         Round.Players.RemoveAt(i--);
@@ -139,10 +151,7 @@ namespace PokerClassLibrary
             Thread t0 = new Thread(StartNewRound);
             t0.Start();
         }
-        private static void MoveChips() { 
-            
-        }
-
+        
         private static Stack<T> Shuffle<T>(Stack<T> stack)
         {
             List<T> list = new List<T>();

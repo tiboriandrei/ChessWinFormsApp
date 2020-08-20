@@ -9,6 +9,7 @@ namespace PokerClassLibrary
         public int Chips { get; set; }
         public Tuple<Card, Card> Hand { get; set; }
         public int PlaceAtTable { get; set; }
+        public int LastBet { get; set; }
     }
 
     public class PlayerActionEventArgs : EventArgs {
@@ -18,6 +19,12 @@ namespace PokerClassLibrary
 
     public class FlopEventArgs : EventArgs {
         public List<Card> FloppedCards { get; set; }        
+    }
+
+    public class BetEventArgs : EventArgs
+    {
+        public int BetAmount { get; set; }
+        public int PlaceAtTable { get; set; }
     }
 
     public sealed class PokerEventsMediator
@@ -76,6 +83,14 @@ namespace PokerClassLibrary
         public static void OnBetsStageEnded(object sender, EventArgs e)
         {
             BetsStageEnded?.Invoke(null, e);
+        }
+
+        // ----------------------------------------------------------------
+
+        public static event EventHandler<BetEventArgs> Bet;
+        public static void OnBet(object sender, BetEventArgs e)
+        {
+            Bet?.Invoke(null, e);
         }
 
 

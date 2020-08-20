@@ -13,7 +13,7 @@ namespace ChessClassLibrary
 {
     public static class Referee
     {
-        public static PieceColor PlayerTurn { get; set; } = PieceColor.White;
+        public static PieceColor PlayerTurn { get; private set; } = PieceColor.White;
 
         private static List<Move> AvailableMoves = new List<Move>();
 
@@ -137,6 +137,13 @@ namespace ChessClassLibrary
         private static void EndGame(object sender, EventArgs e) {
 
             EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });            
+        }
+
+        public static void ClearReferee()
+        {
+            EventsMediator.PlayerMoved -= HandlePlayerMove;
+            EventsMediator.TimesUp -= EndGame;
+            EventsMediator.Undo -= UndoMove;            
         }
     }
 }
