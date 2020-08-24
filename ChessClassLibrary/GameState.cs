@@ -12,7 +12,10 @@ namespace ChessClassLibrary
     {
         private static Dictionary<int, Dictionary<int, ChessPiece>> Layout = new Dictionary<int, Dictionary<int, ChessPiece>>();
 
-        public static void InitGameState() {            
+        public static PieceColor PlayerTurn { get; private set; }
+
+        public static void InitGameState() {
+            PlayerTurn = PieceColor.White;
             Layout.Clear();
 
             Dictionary<int, ChessPiece> BlackPieces = new Dictionary<int, ChessPiece>
@@ -68,7 +71,7 @@ namespace ChessClassLibrary
 
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetGameState() 
         {
-            Dictionary<int, Dictionary<int, ChessPiece>> clone = HelperMaths.DeepClone(Layout);
+            var clone = HelperMaths.DeepClone(Layout);
             return clone;
         }
 
@@ -85,7 +88,7 @@ namespace ChessClassLibrary
 
         public static Dictionary<int, Dictionary<int, ChessPiece>> GetScenario(Move testMove)
         {
-            Dictionary<int, Dictionary<int, ChessPiece>> scenario = HelperMaths.DeepClone(Layout);
+            var scenario = HelperMaths.DeepClone(Layout);
 
             scenario[testMove.Destination.Item1][testMove.Destination.Item2] = scenario[testMove.Origin.Item1][testMove.Origin.Item2];
             scenario[testMove.Origin.Item1][testMove.Origin.Item2] = null;
@@ -95,10 +98,9 @@ namespace ChessClassLibrary
 
         public static void UpdateLayout(Move legalMove) 
         {
+            PlayerTurn = PlayerTurn == PieceColor.White ? PieceColor.Black : PieceColor.White;
             legalMove.capturedPiece = Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] != null ? Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] : null;
-
-            EventsMediator.OnPlayerMoved(null, new PlayerEventArgs { pieceColor = Layout[legalMove.Origin.Item1][legalMove.Origin.Item2].PieceColor , move = legalMove});
-
+             
             Layout[legalMove.Destination.Item1][legalMove.Destination.Item2] = Layout[legalMove.Origin.Item1][legalMove.Origin.Item2];
             Layout[legalMove.Origin.Item1][legalMove.Origin.Item2] = null;
         }                

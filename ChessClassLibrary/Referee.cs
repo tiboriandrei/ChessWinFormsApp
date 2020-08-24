@@ -12,13 +12,10 @@ using System.Linq;
 namespace ChessClassLibrary
 {
     public static class Referee
-    {
-        public static PieceColor PlayerTurn { get; private set; } = PieceColor.White;
-
+    {    
         private static List<Move> AvailableMoves = new List<Move>();
 
-        private static Stack<Move> moveHistory;
-        //private static ConcurrentDictionary<int, Move> myThrSafeDict = new ConcurrentDictionary<int, Move>();
+        private static Stack<Move> moveHistory;        
 
         public static void InitReferee() {
             EventsMediator.PlayerMoved += HandlePlayerMove;
@@ -33,14 +30,14 @@ namespace ChessClassLibrary
             var Layout = GameState.GetGameState();
 
             if (Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2] == null || 
-                Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].PieceColor != PlayerTurn)
+                Layout[selectedPieceCoords.Item1][selectedPieceCoords.Item2].PieceColor != GameState.PlayerTurn)
             {
                 return AvailableMoves;
             }            
 
             if (NrOfMovesLeft(Layout) == 0)
             {
-                EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });
+                EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = GameState.PlayerTurn });
                 return AvailableMoves;
             }
 
@@ -51,23 +48,21 @@ namespace ChessClassLibrary
         }
 
         private static int NrOfMovesLeft(Dictionary<int, Dictionary<int, ChessPiece>> layout) {
-            int movesToAvoidMate = 0;
-            var test = GameState.GetGameState();
+            int movesToAvoidMate = 0;            
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
                     if (movesToAvoidMate > 0)
                     {
-                        break;
+                        return movesToAvoidMate;
                     }
-                    if (test[i][j] != null)
+                    if (layout[i][j] != null)
                     {
-                        if (test[i][j].PieceColor == PlayerTurn)
+                        if (layout[i][j].PieceColor == GameState.PlayerTurn)
                         {
-                            List<Move> pieceAvMoves = layout[i][j].GetAvailableMoves(Coordinate.GetInstance.GetCoord(i, j)); ;
-                            DeleteIllegalMoves(pieceAvMoves);
-                            movesToAvoidMate += pieceAvMoves.Count;
+                            List<Move> pieceAvMoves = layout[i][j].GetAvailableMoves(Coordinate.GetInstance.GetCoord(i, j));
+                            movesToAvoidMate += DeleteIllegalMoves(pieceAvMoves).Count;                            
                         }
                     }
                 }
@@ -89,37 +84,32 @@ namespace ChessClassLibrary
             return availableMoves;
         }
 
-        private static bool TestKingChecks(Dictionary<int, Dictionary<int, ChessPiece>> scenario) {
-            bool KingChecked = false;
+        private static bool TestKingChecks(Dictionary<int, Dictionary<int, ChessPiece>> scenario) { 
 
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                        if (scenario[i][j]?.ToString() == PlayerTurn.ToString() + "King")
+                        if (scenario[i][j]?.ToString() == GameState.PlayerTurn.ToString() + "King")
                         {
-                            KingChecked = false;
-
-                            PieceColor enemy = PlayerTurn == PieceColor.Black ? enemy = PieceColor.White : enemy = PieceColor.Black;
+                            PieceColor enemy = GameState.PlayerTurn == PieceColor.Black ? enemy = PieceColor.White : enemy = PieceColor.Black;
                         
                             if (HelperMaths.EnemyPawnCheck(i, j, scenario, enemy) || HelperMaths.HorizontalThreatCheck(i, j, scenario, enemy) ||
                                 HelperMaths.DiagonalThreatCheck(i, j, scenario, enemy) || HelperMaths.VerticalThreatCheck(i, j, scenario, enemy) 
                                 || HelperMaths.HorseThreatCheck(i, j, scenario, enemy))
                             {
-                                KingChecked = true;
+                                return true;
                             }
-                            break;
+                            return false;
                         }                                        
                 }
             }
-
-            return KingChecked;            
+            return false;            
         }
 
         private static void HandlePlayerMove(object sender, PlayerEventArgs e)
         {
-            moveHistory.Push(e.move);
-            PlayerTurn = PlayerTurn == PieceColor.White ? PieceColor.Black : PieceColor.White;                       
+            moveHistory.Push(e.move);                                 
         }
 
         public static void UndoMove(object sender, EventArgs e)
@@ -136,7 +126,7 @@ namespace ChessClassLibrary
 
         private static void EndGame(object sender, EventArgs e) {
 
-            EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = PlayerTurn });            
+            EventsMediator.OnWinner(null, new PlayerEventArgs { pieceColor = GameState.PlayerTurn });            
         }
 
         public static void ClearReferee()

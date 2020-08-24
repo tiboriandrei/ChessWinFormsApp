@@ -17,7 +17,7 @@ namespace PokerClassLibrary
             Deck = Deck.GetInstance;
             PokerEventsMediator.AddPlayer += AddPlayer;
             PokerEventsMediator.PlayerAction += HandlePlayerAction;
-            PokerEventsMediator.BetsStageEnded += Deal;
+            PokerEventsMediator.BetsStageEnded += DealCards;
         }        
 
         private static void StartNewRound() {
@@ -38,7 +38,7 @@ namespace PokerClassLibrary
         }
 
         private static int stage = 0;
-        private static void Deal(object sender, EventArgs e) {
+        private static void DealCards(object sender, EventArgs e) {
             switch (stage)
             {
                 case 0: DealFlop();
